@@ -46,7 +46,9 @@ app.use((error, req, res, next) => {
 
 app.get("/*", (req, res) => {
 	// res.sendFile(path.join(__dirname, "build", "index.html"));
-    console.log("hello")
+    // ^^^^ this is for after app is done to host the built react app
+
+	console.log("hello")
     res.status(200).json("welcome")
 });
 
