@@ -1,0 +1,17 @@
+.App {
+    
+}
+
+.App-header {
+    @include flexcenter;
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+.test {
+    width: 100%;
+    @include flexcenter;
+}

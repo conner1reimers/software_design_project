@@ -3,7 +3,8 @@ const router = express.Router();
 const employeeController = require("../controllers/users.js");
 
 
-router.get("/test", employeeController.test);
+// :username indicates in the URL we will specify that parameter
+router.get("/test/:username", employeeController.test);
 
 
 

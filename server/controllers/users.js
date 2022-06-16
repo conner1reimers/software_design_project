@@ -9,13 +9,13 @@ const test = async (req, res, next) => {
     }
 
     let result;
+
     try {
         result = await mysql.query(sqlStatement);
-        console.log(result);
-        res.status(200).json({ result });
-    } catch(err) {
-        return next(err)
-    }
+
+        res.status(200).json({ user: result[0] });
+
+    } catch(err) {return next(err)}
 }
 
 

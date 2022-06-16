@@ -1,0 +1,131 @@
+$color-dark-blue: #191e23;
+$color-light-blue: #53c9cc;
+$color-medium-blue: #335566;
+$color-grey: #383d44;
+$color-medium-blue-2: #9ac1d0;
+$color-teal: #3f6162;
+$color-light-teal: #96b4a7;
+$color-red: #ce665c;
+$color-white: #efede6;
+$color-darker: #1b1f1f;
+$color-green: #7aa376;
+$color-bluey: #90bdb1;
+$color-cool-grey: rgba(108, 121, 124, 0.24);
+$color-mainblue: #599db9;
+$color-deepblue: #2c82adbd;
+$color-deepblue-2: #2c82ad38;
+$color-offwhite: #99aab51f;
+$color-orange: #d5692a;
+$font-1: "Roboto";
+$font-3: "Catamaran", sans-serif;
+
+
+@mixin btnReset {
+  background: none;
+  box-shadow: none;
+  border: none;
+  
+}
+
+@mixin niceTxt {
+  font-family: $font-1;
+  font-weight: 500;
+  color: $color-white-2;
+  opacity: 0.85;
+  text-shadow: $tshadow-black;
+}
+
+@mixin heightWidthSame($size) {
+  height: $size;
+  width: $size;
+}
+
+@mixin flexcenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin heightWidth100 {
+  height: 100%;
+  width: 100%;
+}
+
+
+html {
+  box-sizing: border-box;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  @media screen and (max-width: 1099px) {
+    font-size: 50%;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 62.5%;
+  min-height: 100vh;
+  line-height: 1.6;
+  background-image: linear-gradient(45deg, #1b1f1f, #1b1f1f, #1b1f1f);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 680px;
+  font-family: $font-1;
+  font-size: 1rem;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
+// THIS IS THE MAIN APP STYLES
+#root {
+  display: grid;
+  grid-template-rows: 4vh 65vh 50vh max-content 10vh;
+  grid-template-columns: 100%;
+  grid-row-gap: 0.3rem;
+  z-index: 2;
+  position: relative;
+  width: 100vw;
+  overflow: hidden;
+  background-image: linear-gradient(45deg, #1b1f1f, #1b1f1f, #1b1f1f);
+  min-height: 680px;
+  color: white;
+}
+
+.headings {
+  font-size: 2.142857rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.167;
+  letter-spacing: -0.01562em;
+  margin: 0;
+  text-shadow: #191e23;
+  color: #e6eeefd5;
+  text-shadow: 1.5px 1.5px 14px #1112136b;
+}
+
+.btn {
+  @include btnReset();
+  background-color: rgb(64, 155, 188);
+  border-radius: .25rem;
+  padding: .7rem;
+  color: white;
+  cursor: pointer;
+  
+  transition: all .2s;
+
+  &:hover {
+    background-color: rgba(86, 92, 86, 0.411);
+    transition: all .2s;
+
+  }
+}

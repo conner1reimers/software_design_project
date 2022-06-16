@@ -1,15 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const path = require("path");
 const cors = require("cors");
 const usersRoutes = require("./routes/users");
-// require('dotenv').config();
 
 
 const app = express().use(cors({ origin: true, credentials: true }));
 // app.use(express.static(path.join(__dirname)));
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "build")));
@@ -50,7 +47,6 @@ app.use((error, req, res, next) => {
 app.get("/*", (req, res) => {
 	// res.sendFile(path.join(__dirname, "build", "index.html"));
     console.log("hello")
-    console.log(process.env.REACT_APP_DBNAME)
     res.status(200).json("welcome")
 });
 
