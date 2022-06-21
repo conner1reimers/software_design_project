@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 const Input = (props) => {
@@ -7,7 +7,7 @@ const Input = (props) => {
     {
       value: props.value || '',
       isValid: props.isValid || false,
-      showLabel: props.value ? false : true
+      showLabel: true
     });
 
   
@@ -18,7 +18,8 @@ const Input = (props) => {
         return {
             ...prevState,
             value: e.target.value,
-            showLabel: (e.target.value.length < 1)
+            showLabel: (e.target.value.length < 1),
+            isValid: (e.target.value.length < 1)
         }
     })
   };
