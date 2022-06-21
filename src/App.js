@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Input from './components/Input';
 import TestRequest from './components/TestRequest';
 import logo from './logo.svg';
 import "./styles/base.scss";
+import { useForm } from './util/hooks/useForm';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(false);
+ 
+  const [formState, inputHandler] = useForm();
+
+  useEffect(() => {
+    console.log(formState);
+  }, [formState]);
 
 
   return (
@@ -29,6 +37,15 @@ function App() {
 
       <div className='test'>
         <TestRequest username="testuser" setUser={setCurrentUser}/>
+        
+        <form>
+          <p className='heading'>test input 1</p>
+            <Input inputHandler={inputHandler} id="test" label="Test label"/>
+          
+          <p className='heading'>test input 1</p> 
+            <Input inputHandler={inputHandler} id="test2" label="Test label"/>
+        </form>
+        
       </div>
 
       {/* this portion only runs after the user has been set (when you click test request) */}

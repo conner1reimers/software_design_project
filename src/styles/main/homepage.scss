@@ -14,4 +14,5 @@
 .test {
     width: 100%;
     @include flexcenter;
+    column-gap: 20px;
 }
