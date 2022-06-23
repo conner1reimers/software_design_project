@@ -1,8 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { appContext } from '../App';
 import { useHttpClient } from '../util/hooks/http-hook'
 
 const TestRequest = (props) => {
     const {isLoading, sendRequest} = useHttpClient();
+
+    let state = useContext(appContext);
+
+    useEffect(() => {
+        state.setAppState({
+            name: "test",
+            dog: "nugget"
+        })
+    }, [])
+
+
 
     const queryBackend = async () => {
         let result;
