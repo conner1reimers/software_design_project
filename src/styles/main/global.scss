@@ -1,5 +1,11 @@
 $font-1: "Roboto";
 $font-3: "Catamaran", sans-serif;
+$text-primary: #fbfbfe;
+$text-secondary: #cfcfd8;
+$border-primary: #52525e;
+$border-secondary: #3a3944;
+
+
 
 
 @mixin btnReset {
@@ -57,7 +63,6 @@ body {
   background-image: linear-gradient(45deg, #1b1f1f, #1b1f1f, #1b1f1f);
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 680px;
   font-family: $font-1;
   font-size: 1rem;
 }
@@ -70,16 +75,12 @@ code {
 
 // THIS IS THE MAIN APP STYLES
 #root {
-  display: grid;
-  grid-template-rows: 4vh 65vh 50vh max-content 10vh;
-  grid-template-columns: 100%;
-  grid-row-gap: 0.3rem;
+  @include heightWidth100;
   z-index: 2;
-  position: relative;
+  position: absolute;
   width: 100vw;
   overflow: hidden;
   background-image: linear-gradient(45deg, #1b1f1f, #1b1f1f, #1b1f1f);
-  min-height: 680px;
   color: white;
 }
 
@@ -141,4 +142,15 @@ code {
   left: 1.25rem;   
   font-size: 1.1rem;
   pointer-events: none;
+}
+
+.label {
+  margin: 0;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $text-primary;
+  font-family: $font-3;
+  font-size: 1.2rem;
 }

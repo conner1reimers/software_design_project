@@ -1,0 +1,50 @@
+.registration {
+    @include heightWidthSame(95%);
+    @include flexcenter;
+    // background-color: rgba(222, 222, 177, 0.224);
+}
+
+
+.form-contain {
+    @include flexcenter;
+    flex-direction: column;
+
+    form {
+        @include heightWidth100;
+        @include flexcenter;
+        flex-direction: column;
+        row-gap: 10px;
+    }
+}
+
+
+.back-btn {
+    @include heightWidth100;
+    @include flexcenter;
+    justify-content: flex-end;
+    height: 100px;
+
+    button {
+        background-color: black;
+    }
+}
+
+
+.form-row.dropdown {
+    width: 100%;
+}
+
+.dropdown-select {
+    box-sizing: border-box;
+    margin: .35rem;
+    width: 100%;
+    height: 40px;
+    font-size: 1.1rem;
+    border-radius: 9px;
+    outline: none;
+    border: none;
+    padding-left: 1rem;
+    border: 2px solid rgba(170, 175, 174, 0.463);
+    background-color: rgba(27, 29, 31, 0.297);
+    color: rgb(241, 240, 240);
+}
