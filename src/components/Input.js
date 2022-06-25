@@ -41,7 +41,7 @@ const Input = (props) => {
               onChange={changeHandler} 
               className={`${props.class || ''}`}
               value={inputState.value}
-              // type = {inputState.showLabel ? "text": "password"}
+              type={`${props.password ? 'password' : 'text'}`}
             />
         </div>
     </div>
