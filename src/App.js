@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Registration from './components/registrationPage/Registration';
 import User from './components/userPage/User';
+import FuelQuote from './components/FuelQuotePage/FuelQuote';
 import "./styles/base.scss";
 
 
@@ -30,7 +31,8 @@ function App() {
         
         {/* Renders component based on pageState */}
         {pageState === "register" && <Registration/>}
-        {pageState === "user" && <User/>}        
+        {pageState === "user" && <User/>} 
+        {pageState === "fuel_form" && <FuelQuote/>}       
         
 
       </div>
