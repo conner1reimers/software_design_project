@@ -43,8 +43,16 @@
     border-radius: 9px;
     outline: none;
     border: none;
-    padding-left: 1rem;
+    padding-left: .6rem;
+    margin-left: 0;
     border: 2px solid rgba(170, 175, 174, 0.463);
     background-color: rgba(27, 29, 31, 0.297);
     color: rgb(241, 240, 240);
+}
+
+.register-header {
+    width: 100%;
+    @include flexcenter;
+    justify-content: flex-start;    
+    // padding-left: 1rem;
 }

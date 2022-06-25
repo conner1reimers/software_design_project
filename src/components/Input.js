@@ -28,6 +28,7 @@ const Input = (props) => {
     props.inputHandler(props.id, inputState.value, inputState.isValid);
   }, [inputState.value, inputState.isValid])
 
+  console.log(props)
 
   return (
     <div className='form-row'>

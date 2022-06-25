@@ -31,7 +31,11 @@ const Registration = () => {
                 alert("Try again, your passwords do not match");
                 return;
             } else {
-                console.log(formState);
+                state.setAppState({
+                    userInfo: formState
+                });
+
+                state.setPageState("user")
             }
         } else {
             alert("Username and password must be between 6 and 12 characters");
@@ -43,9 +47,10 @@ const Registration = () => {
   return (
     <div className='registration'>
         <div className='form-contain'>
+{/*             
             <div className='back-btn'>
                 <button className='btn' onClick={() => state.setPageState("home")}> back to home </button>
-            </div>
+            </div> */}
 
             <div className='register-header'>
                 <p className='label'>Sign-Up!</p>
@@ -55,7 +60,11 @@ const Registration = () => {
                 <Input inputHandler={inputHandler} id="username" label="Username"/>
                 <Input inputHandler={inputHandler} id="password" label="Password"/>
                 <Input inputHandler={inputHandler} id="password2" label="Verify Password"/>
-                <button type="submit" className="btn">SUBMIT</button>
+                <div className='login-bottom'>
+                    <button type="submit" className="btn">SUBMIT</button>
+                    <p onClick={() => state.setPageState('login')} className='link'>Already have an account? <span> Login </span></p>
+                </div>
+                
             </form>
 
         </div>
