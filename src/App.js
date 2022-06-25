@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Registration from './components/registrationPage/Registration';
+import Login from './components/loginPage/Login';
 import User from './components/userPage/User';
 import "./styles/base.scss";
+import "./styles/main/Login.scss";
 
 
 let appContext = createContext();
@@ -29,6 +31,7 @@ function App() {
         )}
         
         {/* Renders component based on pageState */}
+        {pageState === "login" && <Login/>}
         {pageState === "register" && <Registration/>}
         {pageState === "user" && <User/>}        
         
