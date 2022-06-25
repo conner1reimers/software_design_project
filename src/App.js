@@ -3,8 +3,10 @@ import Registration from './components/registrationPage/Registration';
 import User from './components/userPage/User';
 import FuelQuote from './components/FuelQuotePage/FuelQuote';
 import Login from './components/loginPage/Login';
-
+import FuelQuoteHistory from './components/fuelquoteHistoryPage/FuelQuoteHistory';
 import "./styles/base.scss";
+import "./styles/main/Login.scss";
+import "./styles/main/FuelQuoteHistory.scss";
 
 
 let appContext = createContext();
@@ -44,6 +46,7 @@ function App() {
         {pageState === "register" && <Registration/>}
         {pageState === "user" && <User/>} 
         {pageState === "fuel_form" && <FuelQuote/>}       
+        {pageState === "fuel_history" && <FuelQuoteHistory/>}  
         
 
       </div>
