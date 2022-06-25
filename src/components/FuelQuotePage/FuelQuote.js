@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import Input from '../Input'
 import {useForm,Controller} from '../../util/hooks/useForm';
 import {appContext} from '../../App';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 
 const FuelQuote = () => {
   let state = useContext(appContext);
@@ -63,6 +63,10 @@ const FuelQuote = () => {
                 <input inputHandler={inputHandler} value="Suggested Price: not avialble" label=""readOnly/>
                 <button type="submit" className="btn">SUBMIT</button>
             </form>
+
+            <div className='back-btn11'>
+            <button className='btn00' onClick={() => state.setPageState("fuel_history")}> Your Fuel Quote History </button>
+        </div>
 
         </div>
     </div>

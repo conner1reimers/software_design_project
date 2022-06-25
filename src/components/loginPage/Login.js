@@ -68,12 +68,12 @@ const Login = () => {
             
 
             <div className='back-btn1'>
-                 <button className='btn0' onClick={() => state.setPageState("user")}> Sign Up </button>
+                 <button className='btn0' onClick={() => state.setPageState("register")}> Sign Up </button>
             </div>
        </div>
      </div>   
 
-   )
+   )    
 }
 
 export default Login
