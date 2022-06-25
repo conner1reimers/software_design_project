@@ -21,14 +21,17 @@ const Login = () => {
   const submitForm = (e) => {
     e.preventDefault();
 
+    console.log(formState)
+
     if(formState.username.value.length < 12 && formState.username.value.length >= 6 && 
         formState.password.value.length < 12 && formState.password.value.length >= 6) {
-            if(formState.password.value != formState.password2.value) {
-                alert("Try again, your passwords do not match");
-                return;
-            } else {
-                console.log(formState);
-            }
+
+            state.setAppState({
+                userInfo: formState
+            });
+
+            state.setPageState("user");
+        
         } else {
             alert("Username and password must be between 6 and 12 characters");
             return;
@@ -61,15 +64,18 @@ const Login = () => {
             
             <form className ='input-field' onSubmit={submitForm}>
                 <Input inputHandler={inputHandler} id="username" label="Enter Username"/>
-                <Input inputHandler={inputHandler} id="password" label="Enter Password"/>
-                <button type="submit" className="btn1">Login</button>
+                <Input inputHandler={inputHandler} id="password" password label="Enter Password"/>
+                <div className='login-bottom'>
+                    <button type="submit" className="btn">Login</button>
+                    <p onClick={() => state.setPageState('register')} className='link'>Need an account? <span> Sign-Up </span></p>
+                </div>
             </form>
 
             
-
+{/* 
             <div className='back-btn1'>
                  <button className='btn0' onClick={() => state.setPageState("user")}> Sign Up </button>
-            </div>
+            </div> */}
        </div>
      </div>   
 

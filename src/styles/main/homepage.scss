@@ -1,6 +1,7 @@
 .App {
     @include heightWidth100;
     @include flexcenter;
+    flex-direction: column;
 }
 
 .App-header {
@@ -52,6 +53,8 @@ a:hover, a:active { text-decoration: none; }
     display: flex;
     align-items: center;
     grid-gap: 1rem;
+    // padding-left: .5rem;
+
 }
 
 .link {
@@ -76,4 +79,8 @@ a:hover, a:active { text-decoration: none; }
             color: rgb(154, 220, 240);
         }
     }
+}
+
+.heading {
+    @include flexcenter;
 }

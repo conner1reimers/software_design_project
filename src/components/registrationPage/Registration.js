@@ -47,9 +47,10 @@ const Registration = () => {
   return (
     <div className='registration'>
         <div className='form-contain'>
+{/*             
             <div className='back-btn'>
                 <button className='btn' onClick={() => state.setPageState("home")}> back to home </button>
-            </div>
+            </div> */}
 
             <div className='register-header'>
                 <p className='label'>Sign-Up!</p>

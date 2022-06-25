@@ -100,7 +100,7 @@ code {
   @include btnReset();
   background-color: rgb(64, 155, 188);
   border-radius: .25rem;
-  padding: .7rem;
+  padding: .5rem;
   color: white;
   cursor: pointer;
   
@@ -127,6 +127,7 @@ code {
         outline: none;
         border: none;
         padding-left: 1rem;
+        margin-left: 0;
         border: 2px solid rgba(170, 175, 174, 0.463);
         background-color: rgba(27, 29, 31, 0.297);
         color: rgb(241, 240, 240);
@@ -139,7 +140,7 @@ code {
   position: absolute;
   @include flexcenter;
   height: 100%;
-  left: 1.25rem;   
+  left: 1rem;   
   font-size: 1.1rem;
   pointer-events: none;
 }
@@ -153,4 +154,8 @@ code {
   color: $text-primary;
   font-family: $font-3;
   font-size: 1.2rem;
+}
+
+.form-row {
+  width: 100%;
 }

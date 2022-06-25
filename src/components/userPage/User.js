@@ -43,9 +43,20 @@ const User = () => {
         return;
     }
 
-    state.setAppState({
-        userInfo: formState
-    })
+    console.log(formState)
+
+    state.setAppState((prevState) => {
+        return {
+            ...prevState,
+            userInfo: {
+                ...prevState.userInfo,
+                ...formState
+            }
+        }
+        
+    });
+    
+    state.setPageState("home");
 
   }
 
