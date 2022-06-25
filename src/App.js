@@ -30,6 +30,7 @@ function App() {
         )}
         
         {/* Renders component based on pageState */}
+        {pageState === "login" && <Login/>}
         {pageState === "register" && <Registration/>}
         {pageState === "user" && <User/>} 
         {pageState === "fuel_form" && <FuelQuote/>}       
