@@ -72,10 +72,10 @@ const Login = () => {
             </form>
 
             
-{/* 
-            <div className='back-btn1'>
+
+            {/* <div className='back-btn1'>
                  <button className='btn0' onClick={() => state.setPageState("register")}> Sign Up </button>
-            </div>
+            </div> */}
 
        </div>
      </div>   

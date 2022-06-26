@@ -5,8 +5,6 @@ import FuelQuote from './components/FuelQuotePage/FuelQuote';
 import Login from './components/loginPage/Login';
 import FuelQuoteHistory from './components/fuelquoteHistoryPage/FuelQuoteHistory';
 import "./styles/base.scss";
-import "./styles/main/Login.scss";
-import "./styles/main/FuelQuoteHistory.scss";
 
 
 let appContext = createContext();
