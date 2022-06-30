@@ -1,22 +1,33 @@
 const mysql = require('../util/mysql.js');
+const HttpError = require("../util/http-error");
+const {validationResult} = require('express-validator')
 
 
 
-const test = async (req, res, next) => {
-    const sqlStatement = {
-        sql: "select * from users where username = ?",
-        values: ["testuser"]
+const login = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        if (errors.errors[0].param === 'username') {
+            const err = new HttpError('Invalid username, must be 6-12 characters', 422)
+            return next(err)
+          } else if (errors.errors[0].param === 'password') {
+            const err = new HttpError('Invalid password, must be be 6-12 characters', 422)
+            return next(err)
+          }
     }
 
-    let result;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    try {
-        result = await mysql.query(sqlStatement);
+    // FIND USERNAME + PASSWORD COMBO IN DATABASE
 
-        res.status(200).json({ user: result[0] });
+    console.log(`USER: ${username}, PASS: ${password}`)
 
-    } catch(err) {return next(err)}
+    res.status(200).json({username, password});
+
+
 }
 
 
-exports.test = test;
+exports.login = login;

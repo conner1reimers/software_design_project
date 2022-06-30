@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import Input from '../Input'
 import {useForm} from '../../util/hooks/useForm';
 import {appContext} from '../../App';
+import {useHttpClient} from '../../util/hooks/http-hook';
 
 const Login = () => {
   let state = useContext(appContext);
@@ -17,20 +18,47 @@ const Login = () => {
     },
   });
 
+  const {isLoading, sendRequest} = useHttpClient();
 
-  const submitForm = (e) => {
+
+  const submitForm = async (e) => {
     e.preventDefault();
-
-    console.log(formState)
 
     if(formState.username.value.length < 12 && formState.username.value.length >= 6 && 
         formState.password.value.length < 12 && formState.password.value.length >= 6) {
+            // VALID INPUTS
 
-            state.setAppState({
-                userInfo: formState
-            });
+            let response;
 
-            state.setPageState("user");
+            try {
+
+                response = await sendRequest(
+                    "http://localhost:5000/api/users/login", // URL
+                    "POST",                                  // HTTP Request Type
+                    JSON.stringify({                         // Request Body
+                        username: formState.username.value,
+                        password: formState.password.value
+                    }),  
+                    {'Content-Type': 'application/json'}    // Content Type
+                );
+
+                if(response) {
+                    console.log(response)
+                    state.setAppState({
+                        userInfo: formState
+                    });
+        
+                    state.setPageState("user");
+                } else {
+                    console.log("there was a problem")
+                }
+                
+
+            } catch (err) {
+                console.log(err)
+            }
+
+            
         
         } else {
             alert("Username and password must be between 6 and 12 characters");
