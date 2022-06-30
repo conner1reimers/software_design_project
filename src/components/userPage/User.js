@@ -26,7 +26,7 @@ const User = () => {
         return;
     }
 
-    if(formState.state.value.length != 2) {
+    if(formState.state.value.length !== 2) {
         alert("Please select a state");
         return;
     }

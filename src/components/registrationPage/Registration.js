@@ -27,7 +27,7 @@ const Registration = () => {
 
     if(formState.username.value.length < 12 && formState.username.value.length >= 6 && 
         formState.password.value.length < 12 && formState.password.value.length >= 6) {
-            if(formState.password.value != formState.password2.value) {
+            if(formState.password.value !== formState.password2.value) {
                 alert("Try again, your passwords do not match");
                 return;
             } else {
