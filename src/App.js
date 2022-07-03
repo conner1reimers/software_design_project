@@ -12,7 +12,7 @@ let appContext = createContext();
 
 function App() {
   const [appState, setAppState] = useState();
-  const [pageState, setPageState] = useState("user");
+  const [pageState, setPageState] = useState("login");
 
   useEffect(() => {
     console.log(appState)
