@@ -17,8 +17,7 @@ function App() {
   useEffect(() => {
     console.log(appState)
   }, [appState])
-
-
+  
   return (
     <appContext.Provider value={{appState, setAppState, setPageState}}>
       <div className="App">
