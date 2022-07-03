@@ -3,20 +3,51 @@ import Input from '../Input'
 import {useForm} from '../../util/hooks/useForm';
 import { appContext } from '../../App';
 import StateDropdown from './StateDropdown';
+import {useHttpClient} from '../../util/hooks/http-hook';
 
 const User = () => {
   const state = useContext(appContext);
-  const [formState, inputHandler] = useForm();
 
-  const submitForm = (e) => {
+
+  const [formState, inputHandler] = useForm({
+  name: {
+    value: "",
+    isValid: false
+},
+  address1: {
+    value: "",
+    isValid: false
+},
+city: {
+    value: "",
+    isValid: false
+},
+state: {
+    value: "",
+    isValid: false
+},
+zip : {
+    value: "",
+    isValid: false
+},
+});
+
+  const {isLoading, sendRequest} = useHttpClient();
+
+  const submitForm = async (e) => {
     e.preventDefault();
     
-    if(formState.name.value === "" || formState.name.value.length > 50 || formState.name.value.length < 2) {
+    if(formState.name.value === "" || formState.name.value.length > 50 || formState.name.value.length < 2)  {
         alert("Full name must be between 2 and 50 characters");
         return;
     }
 
     if(formState.address1.value === "" || formState.address1.value.length > 100 || formState.address1.value.length < 5) {
+        alert("Address must be between 5 and 100 characters");
+       return;
+    }
+
+    if(formState.address2.value === "" || formState.address2.value.length > 100 || formState.address2.value.length < 5) {
         alert("Address must be between 5 and 100 characters");
         return;
     }
@@ -43,20 +74,55 @@ const User = () => {
         return;
     }
 
-    console.log(formState)
+    let response;
 
-    state.setAppState((prevState) => {
-        return {
-            ...prevState,
-            userInfo: {
-                ...prevState.userInfo,
-                ...formState
-            }
+    try {
+
+        response = await sendRequest(
+            "http://localhost:5000/api/users/User_profile", // URL
+            "POST",                                  // HTTP Request Type
+            JSON.stringify({                         // Request Body
+                name: formState.name.value,
+                address1: formState.address1.value,
+                address2: formState.address2.value,
+                city: formState.city.value,
+                state: formState.state.value,
+                zip: formState.zip.value
+
+            }),  
+            {'Content-Type': 'application/json'}    // Content Type
+        );
+
+        if(response) {
+            console.log(response)
+            state.setAppState({
+                userInfo: formState
+            });
+
+            state.setPageState("fuel_form");
+        } else {
+            console.log("there was a problem")
         }
         
-    });
+
+    } catch (err) {
+        console.log(err)
+    }
+
+    //console.log(formState)
+
+    // state.setAppState((prevState) => {
+    //     return {
+    //         ...prevState,
+    //         userInfo: {
+    //             ...prevState.userInfo,
+    //             ...formState
+    //         }
+    //     }
+        
+    // });
     
-    state.setPageState("home");
+    //state.setPageState("home");
 
   }
 

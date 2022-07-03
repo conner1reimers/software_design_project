@@ -15,3 +15,18 @@ router.post("/login",
 
 
 module.exports = router;
+
+router.post("/User_profile",
+    [
+        body("name").isLength({min: 2, max: 50}),
+        body("address1").isLength({min: 5, max: 100}),
+        body("address2").isLength({min: 5, max: 100}),
+        body("city").isLength({min: 1, max: 100}),
+        body("state").isLength({min: 2, max: 2}),
+        body("zip").isLength({min: 5, max: 9}),
+    ],
+    usersController.user);
+
+
+
+module.exports = router;
