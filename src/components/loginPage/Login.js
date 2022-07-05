@@ -43,11 +43,9 @@ const Login = () => {
                 );
 
                 if(response) {
-                    console.log(response)
                     state.setAppState({
                         userInfo: formState
                     });
-        
                     state.setPageState("user");
                 } else {
                     console.log("there was a problem")

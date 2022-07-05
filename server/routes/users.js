@@ -12,6 +12,15 @@ router.post("/login",
     ],
     usersController.login);
 
+router.post("/register",
+    [
+        body("username").isLength({min: 6, max: 12}),
+        body("password").isLength({min: 6, max: 12}),
+        body("password2").isLength({min: 6, max: 12})
+
+    ],
+    usersController.login);
+
 
 
 

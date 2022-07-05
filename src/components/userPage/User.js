@@ -10,27 +10,27 @@ const User = () => {
 
 
   const [formState, inputHandler] = useForm({
-  name: {
-    value: "",
-    isValid: false
-},
-  address1: {
-    value: "",
-    isValid: false
-},
-city: {
-    value: "",
-    isValid: false
-},
-state: {
-    value: "",
-    isValid: false
-},
-zip : {
-    value: "",
-    isValid: false
-},
-});
+        name: {
+            value: "",
+            isValid: false
+        },
+        address1: {
+            value: "",
+            isValid: false
+        },
+        city: {
+            value: "",
+            isValid: false
+        },
+        state: {
+            value: "",
+            isValid: false
+        },
+        zip : {
+            value: "",
+            isValid: false
+        },
+  });
 
   const {isLoading, sendRequest} = useHttpClient();
 
@@ -74,6 +74,18 @@ zip : {
         return;
     }
 
+    state.setAppState((prevState) => {
+        return {
+            ...prevState,
+            userInfo: {
+                ...prevState.userInfo,
+                ...formState
+            }
+        }
+    });
+
+    state.setPageState("fuel_form");
+
     let response;
 
     try {
@@ -92,22 +104,15 @@ zip : {
             }),  
             {'Content-Type': 'application/json'}    // Content Type
         );
-
-        if(response) {
-            console.log(response)
-            state.setAppState({
-                userInfo: formState
-            });
-
-            state.setPageState("fuel_form");
-        } else {
-            console.log("there was a problem")
-        }
         
 
+        if(response) console.log(response)
+            
     } catch (err) {
         console.log(err)
     }
+
+    
 
     //console.log(formState)
 

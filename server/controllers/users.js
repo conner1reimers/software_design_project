@@ -24,17 +24,36 @@ const login = async (req, res, next) => {
 
     console.log(`USER: ${username}, PASS: ${password}`);
 
+
+
+    const sqlStatement = {
+      sql: "select * from USERS where username = ? and password = ?",
+      values: [username, password]
+    }
+
+    // let userInfo;
+    // let result;
+    // try {
+    //     result = await mysql.query(sqlStatement);
+
+    //     if(result.rows.length >= 1) {
+    //         userInfo = result.rows[0];
+    //     }
+
+    // } catch(err) {console.log(err)}
+
+
+
     let hasPreviousPurchase = false;
 
     // Check database for previous quote history
-    const sqlStatement = {
+    const sqlStatement2 = {
       sql: "select * from FUEL_QUOTE where user_id = ?",
       values: [username]
     }
   
-    let result;
     // try {
-    //     result = await mysql.query(sqlStatement);
+    //     result = await mysql.query(sqlStatement2);
     //     if(result.rows.length >= 1) {
     //         hasPreviousPurchase = true;
     //     }
@@ -52,10 +71,14 @@ const register = async (req, res, next) => {
       if (errors.errors[0].param === 'username') {
           const err = new HttpError('Invalid username, must be 6-12 characters', 422)
           return next(err)
-        } else if (errors.errors[0].param === 'password') {
-          const err = new HttpError('Invalid password, must be be 6-12 characters', 422)
-          return next(err)
-        }
+      } else if (errors.errors[0].param === 'password') {
+        const err = new HttpError('Invalid password, must be be 6-12 characters', 422)
+        return next(err)
+      } else if (errors.errors[0].param === 'password2') {
+        const err = new HttpError('Invalid password 2, must be be 6-12 characters', 422)
+        return next(err)
+      } 
+        
   }
 
   const username = req.body.username;
@@ -71,10 +94,29 @@ const register = async (req, res, next) => {
   // INSERT USER INTO DB
   console.log(`USER: ${username}, PASS: ${password}`)
 
+  const sqlStatement = {
+    sql: "insert into USERS (username, password) values (?, ?)",
+    values: [username, password]
+  }
+  
+  let userInfo;
+  let result;
+  // try {
+  //     result = await mysql.query(sqlStatement);
+  //     
+  // } catch(err) {console.log(err)}
+
+
   res.status(200).json({username, password});
 
+}
+
+const user = async (req, res, next) => {
+
+  res.status(200).json("hey")
 }
 
 
 exports.register = register;
 exports.login = login;
+exports.user = user;

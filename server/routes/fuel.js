@@ -1,16 +1,32 @@
 const express = require("express");
 const router = express.Router();
-const usersController = require("../controllers/users.js");
+const fuelController = require("../controllers/fuel.js");
 const { check, body } = require("express-validator");
 
 
-// :username indicates in the URL we will specify that parameter
+router.get("/gethistory/:uid", fuelController.getHistory)
+
 router.post("/getprice",
     [
         body("state").isLength({min: 2, max: 2}),
-        body("username").isLength({min: 6, max: 12})
+        body("previousHistory").isBoolean(),
+        body("gallonsRequested").isNumeric()
+
     ],
-    usersController.login);
+    fuelController.getPrice);
+
+router.post("/submitquote",
+    [
+        body("adderss").isLength({min: 5, max: 100}),
+        body("username").isLength({min: 6, max: 12}),
+        body("date").isDate(),
+        body("gallonsRequested").isNumeric(),
+        body("suggested").isNumeric(),
+        body("total").isNumeric()
+
+
+    ],
+    fuelController.submitQuote);
 
 
 

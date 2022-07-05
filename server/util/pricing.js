@@ -10,7 +10,7 @@
 // Company Profit Factor = 10% always
 
 
-export class Pricing {
+class Pricing {
     static state;
     static previousPurchase;
 
@@ -19,6 +19,8 @@ export class Pricing {
         this.state = state;
         this.previousPurchase = previousPurchase;
     }
+
+    
     
 
     predictPrice(galonsRequested) {
@@ -34,3 +36,5 @@ export class Pricing {
         return [suggestedPrice, totalPrice];
     }
 }
+
+module.exports = Pricing;
