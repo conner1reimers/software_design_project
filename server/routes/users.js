@@ -14,7 +14,6 @@ router.post("/login",
 
 
 
-module.exports = router;
 
 router.post("/User_profile",
     [
