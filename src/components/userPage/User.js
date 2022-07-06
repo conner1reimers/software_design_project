@@ -7,7 +7,7 @@ import {useHttpClient} from '../../util/hooks/http-hook';
 
 const User = () => {
   const state = useContext(appContext);
-
+  const {isLoading, sendRequest} = useHttpClient();
 
   const [formState, inputHandler] = useForm({
         name: {
@@ -32,7 +32,7 @@ const User = () => {
         },
   });
 
-  const {isLoading, sendRequest} = useHttpClient();
+  
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -149,7 +149,7 @@ const User = () => {
                 <Input inputHandler={inputHandler} id="city" label="City"/>
                 <StateDropdown inputHandler={inputHandler}/>
                 <Input inputHandler={inputHandler} id="zip" label="Zipcode"/>
-                <button type="submit" className="btn">SUBMIT</button>
+                <button type="submit" className="btn" onClick={() => state.setPageState("fuel_form")}>SUBMIT</button>
             </form>
 
         </div>
