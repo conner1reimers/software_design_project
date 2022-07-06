@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/users.js");
-const usersController = require("../controllers/client_profile.js");
+const userProfileController = require("../controllers/client_profile.js");
 const { check, body } = require("express-validator");
 
 
@@ -34,7 +34,7 @@ router.post("/User_profile",
         body("state").isLength({min: 2, max: 2}),
         body("zip").isLength({min: 5, max: 9}),
     ],
-    usersController.user);
+    userProfileController.user);
 
 
 
