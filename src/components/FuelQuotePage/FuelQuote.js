@@ -1,15 +1,17 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useCallback, useContext, useEffect} from 'react'
 import Input from '../Input'
-import {useForm,Controller} from '../../util/hooks/useForm';
+import {useForm, Controller} from '../../util/hooks/useForm';
 import {appContext} from '../../App';
-import DatePicker from "react-datepicker";
+import {useHttpClient} from '../../util/hooks/http-hook';
+//import DatePicker from "react-datepicker";
 
 const FuelQuote = () => {
   let state = useContext(appContext);
+  const {isLoading, sendRequest} = useHttpClient();
 
-  const [formState, inputHandler,control,register,] = useForm({
+  const [formState, inputHandler] = useForm({
     GallonsRequested: {
-        value: "",
+        value: 0,
         isValid: false
     },
     
@@ -21,8 +23,12 @@ const FuelQuote = () => {
         value: "",
         isValid: false
     },
-    Total: {
-        value: "45000",
+    suggested: {
+        value: '$0',
+        isValid: false
+    },
+    total: {
+        value: '$0',
         isValid: false
     }
   });
@@ -37,12 +43,46 @@ const FuelQuote = () => {
             alert("Please enter a number greater than 0.")
             return
         }
-        else
-        
-                console.log(formState);
+    else
+      console.log(formState);
             
   }
 
+  const requestPrice = useCallback(async () => {
+    let response;
+    try {
+        response = await sendRequest(
+            "http://localhost:5000/api/fuel/getprice", 
+            "POST",
+            JSON.stringify({                         // Request Body
+                state: state.appState.userInfo.state.value,
+                previousHistory: false,
+                gallonsRequested: parseInt(formState.GallonsRequested.value)
+            }),  
+            {'Content-Type': 'application/json'} );
+        
+        if(response) {
+            console.log(response);
+            inputHandler("suggested", `$${response.suggested.toFixed(2)}`, true);
+            inputHandler("total", `$${response.total.toFixed(2)}`, true);
+        }
+    } catch(err) {
+        console.log(err);
+    }
+
+  }, [formState.GallonsRequested.value, sendRequest, state.appState.userInfo.state.value])
+
+
+  useEffect(() => {
+    if(formState.GallonsRequested.value > 0) {
+        requestPrice();
+    }
+  }, [requestPrice, formState.GallonsRequested.value]);
+
+
+  useEffect(() => {
+    console.log(formState)
+  }, [formState]);
 
   return (
     <div className='Fuel_Quote'>
@@ -55,14 +95,20 @@ const FuelQuote = () => {
                 <p className='label'>Fuel Quote Form</p>
             </div>
 
+            {formState && state && state.appState && state.appState.userInfo && 
             <form onSubmit={submitForm}>
-                <Input inputHandler={inputHandler} type="numeric"id="GallonsRequested" label="Gallons Requested"/>
-                <input type='text'label="Delivery Address" value="Address1" readOnly/>
-                <input type="date" min="2017-04-01" label="Delivery Date"></input>
+                <Input inputHandler={inputHandler} value={formState.GallonsRequested.value.toString()} type="numeric" id="GallonsRequested" label="Gallons Requested" sideLabel/>
+                <Input inputHandler={inputHandler} type='text' label="Delivery Address" value={state.appState.userInfo.address1.value} readOnly sideLabel/>
+                <Input inputHandler={inputHandler} date min="2017-04-01" label="Delivery Date" sideLabel/>
+                <Input inputHandler={inputHandler} value={formState.suggested.value} id="suggested" label="Suggested Price" readOnly sideLabel/>
+                <Input inputHandler={inputHandler} value={formState.total.value} id="total" label="Total Price" readOnly sideLabel/>
+                <div className='form-btns'>
+                    <button type="submit" className="btn">SUBMIT</button>
+                    <button className='btn' onClick={() => state.setPageState("fuel_history")}> Your Fuel Quote History </button>
+                </div>
                 
-                <input inputHandler={inputHandler} value="Suggested Price: not avialble" label=""readOnly/>
-                <button type="submit" className="btn">SUBMIT</button>
-            </form>
+            </form>}
+
 
         </div>
     </div>

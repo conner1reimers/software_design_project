@@ -1,0 +1,123 @@
+.fuel-quote-history {
+    min-width: 300px;
+    max-height: 85vh;
+    width: 38%;
+    height: 100%;
+    // margin: 100px auto;
+    background-color: #ffffff;
+    border-radius: 25px;
+    display: grid;
+    position: relative;
+    grid-template-rows: 10% 84% 8%;
+    h1 {
+        color: rgb(0, 0, 0);
+        text-align: center;
+        grid-row: 1/2;
+        
+    }
+}
+
+
+
+.display-history{
+    @include flexcenter;
+    flex-direction: column;
+    justify-content: flex-start;
+    // align-items: flex-start;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-size: medium;
+    grid-row: 2/3;
+    width: 100%;
+    height: 100%; 
+    max-height: 860px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+
+    &::-webkit-scrollbar {
+        background: rgba(63, 116, 190, 0.753);
+        width: 10px;
+        border-radius: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+        border-radius: 0.4rem;
+    }
+}
+
+.form-btns {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    column-gap: 3rem;
+}
+
+.back-btn11 {
+    grid-row: 3/4;
+    @include flexcenter;
+    margin-bottom: 1rem;
+ }
+
+ .btn00 {
+    margin: 0;
+    color: rgb(5, 5, 5);
+    text-align: center;
+}
+
+.quote-history-item {
+    width: 100%;
+    display: flex;
+    background-color: rgb(69, 150, 200);
+    margin: 10px;
+    // border-radius: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    border-top: 1px solid rgba(54, 58, 59, 0.813);
+    
+    div {
+        @include flexcenter;
+        font-size: 1rem;
+        color: black;
+        margin-left: 1rem;
+        border-left: 1px solid rgba(54, 58, 59, 0.813);
+        padding: 5px 10px 5px 10px;
+        
+    }
+
+    p {
+        @include flexcenter;
+        color: $text-primary;
+    }
+
+    div.quote-history-item--number {
+        border-left: none;
+        min-width: 24px;
+        max-width: 24px;
+        @include flexcenter;
+    }
+    div.quote-history-item--date {
+        min-width: 120px;
+    }
+    div.quote-history-item--address {
+        min-width: 250px;
+    }
+    div.quote-history-item--gallons {
+        min-width: 100px;
+    }
+    div.quote-history-item--price {
+        min-width: 125px;
+    }
+    div.quote-history-item--total {
+        min-width: 110px;
+    }
+}
+

@@ -14,33 +14,37 @@ const Input = (props) => {
 
   
   const changeHandler = (e) => {
-    setInput((prevState) => {
+    if(!props.readOnly) {
+      setInput((prevState) => {
         return {
             ...prevState,
             value: e.target.value,
-            showLabel: (e.target.value.length < 1),
+            showLabel: (props.sideLabel || (e.target.value.length < 1)),
             isValid: (e.target.value.length < 1)
         }
     })
+    }
   };
 
   useEffect(() => {
     props.inputHandler(props.id, inputState.value, inputState.isValid);
-  }, [inputState.value, inputState.isValid])
+  }, [inputState.value, inputState.isValid]);
 
 
   return (
     <div className='form-row'>
 
-        <div className='form-element'>
-            <div className='form-element-label'>
+        <div className={`form-element ${!props.readOnly ? "" : "form-element--readonly"} ${props.sideLabel ? "form-element--sidelabel" : ""}`}>
+            <div className={`form-element-label ${props.sideLabel ? "form-element-label--side" : ""}`}>
                 {inputState.showLabel ? <p>{props.label}</p> : null}
             </div>
             
             <input 
               onChange={changeHandler} 
               className={`${props.class || ''}`}
-              value={inputState.value}
+              value={`${(props.readOnly && !props.sideLabel) ? "" : (props.readOnly) ? props.value : inputState.value}`}
+              type={`${props.password ? 'password' : props.date ? 'date' : 'text'}`}
+              min={`${props.min ? props.min : ''}`}
             />
         </div>
     </div>

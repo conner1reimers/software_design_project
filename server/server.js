@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
 const usersRoutes = require("./routes/users");
+const fuelRoutes = require("./routes/fuel");
 
 
 const app = express().use(cors({ origin: true, credentials: true }));
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 
 
 app.use("/api/users", usersRoutes);
+app.use("/api/fuel", fuelRoutes);
 
 // runs when an error is thrown
 app.use((error, req, res, next) => {

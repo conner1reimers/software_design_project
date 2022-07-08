@@ -59,6 +59,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 62.5%;
   min-height: 100vh;
+  height: 100%;
   line-height: 1.6;
   background-image: linear-gradient(45deg, #1b1f1f, #1b1f1f, #1b1f1f);
   background-size: cover;
@@ -100,7 +101,7 @@ code {
   @include btnReset();
   background-color: rgb(64, 155, 188);
   border-radius: .25rem;
-  padding: .7rem;
+  padding: .5rem;
   color: white;
   cursor: pointer;
   
@@ -113,9 +114,20 @@ code {
   }
 }
 
+
+
 .form-element {
   // flex: 1;
   position: relative;
+
+  &--readonly {
+    pointer-events: none;
+  }
+
+  &--sidelabel {
+    display: flex;
+    // position: absolute;
+  }
 
     input {
         box-sizing: border-box;
@@ -127,6 +139,7 @@ code {
         outline: none;
         border: none;
         padding-left: 1rem;
+        margin-left: 0;
         border: 2px solid rgba(170, 175, 174, 0.463);
         background-color: rgba(27, 29, 31, 0.297);
         color: rgb(241, 240, 240);
@@ -134,14 +147,27 @@ code {
 
 }
 
+.Fuel_Quote {
+  width: 25%;
+}
 
 .form-element-label {
   position: absolute;
   @include flexcenter;
   height: 100%;
-  left: 1.25rem;   
+  left: 1rem;   
   font-size: 1.1rem;
   pointer-events: none;
+
+  &--side {
+    position: relative;
+    left: 0;
+    white-space: nowrap;
+    width: 250px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
 
 .label {
@@ -153,4 +179,8 @@ code {
   color: $text-primary;
   font-family: $font-3;
   font-size: 1.2rem;
+}
+
+.form-row {
+  width: 100%;
 }
