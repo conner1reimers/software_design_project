@@ -1,4 +1,4 @@
-const app = require("../server");
+const app = require("./server");
 
 
 app.listen(5000);
