@@ -8,6 +8,7 @@ const Pricing  = require('../util/pricing.js');
 const getPrice = async (req, res, next) => {
     const errors = validationResult(req);
 
+    console.log(req.body)
 
     if(!errors.isEmpty()) {
         console.log(errors)

@@ -36,6 +36,8 @@ const User = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
+
+    console.log('aasldgihjasiol;')
     
     if(formState.name.value === "" || formState.name.value.length > 50 || formState.name.value.length < 2)  {
         alert("Full name must be between 2 and 50 characters");
@@ -83,6 +85,7 @@ const User = () => {
             }
         }
     });
+    console.log(state.appState)
 
     state.setPageState("fuel_form");
 
@@ -112,23 +115,6 @@ const User = () => {
         console.log(err)
     }
 
-    
-
-    //console.log(formState)
-
-    // state.setAppState((prevState) => {
-    //     return {
-    //         ...prevState,
-    //         userInfo: {
-    //             ...prevState.userInfo,
-    //             ...formState
-    //         }
-    //     }
-        
-    // });
-    
-    //state.setPageState("home");
-
   }
 
   return (
@@ -149,7 +135,7 @@ const User = () => {
                 <Input inputHandler={inputHandler} id="city" label="City"/>
                 <StateDropdown inputHandler={inputHandler}/>
                 <Input inputHandler={inputHandler} id="zip" label="Zipcode"/>
-                <button type="submit" className="btn" onClick={() => state.setPageState("fuel_form")}>SUBMIT</button>
+                <button type="submit" className="btn">SUBMIT</button>
             </form>
 
         </div>

@@ -49,8 +49,9 @@ const FuelQuote = () => {
   }
 
   const requestPrice = useCallback(async () => {
-    if(formState && formState.GallonsRequested) {
+    if(formState && formState.GallonsRequested && state && state.appState && state.appState.userInfo && state.appState.userInfo.state) {
         let response;
+        console.log('hi')
         try {
             response = await sendRequest(
                 "http://localhost:5000/api/fuel/getprice", 
