@@ -24,11 +24,8 @@ router.post("/submitquote",
         body("suggested").isNumeric(),
         body("total").isNumeric()
 
-
     ],
     fuelController.submitQuote);
-
-
 
 
 module.exports = router;
