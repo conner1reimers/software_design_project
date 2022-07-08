@@ -24,8 +24,12 @@
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"cd server && nodemon server\"",
     "build": "react-scripts build",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest --coverage --runInBand",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
   },
   "eslintConfig": {
     "extends": [
