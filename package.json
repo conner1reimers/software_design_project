@@ -24,7 +24,7 @@
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"cd server && nodemon server\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
