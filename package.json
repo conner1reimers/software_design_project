@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"cd server && nodemon server\"",
+    "start": "concurrently \"react-scripts start\" \"cd server && nodemon app\"",
     "build": "react-scripts build",
     "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest --coverage --runInBand",
     "eject": "react-scripts eject"
@@ -50,7 +50,11 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "jest": "^28.1.2",
-    "sass": "^1.52.3"
+    "sass": "^1.52.3",
+    "superagent": "^8.0.0",
+    "supertest": "^6.2.4"
   }
 }

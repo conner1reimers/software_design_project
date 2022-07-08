@@ -1,26 +1,20 @@
-const fuelController = require('../controllers/fuel');
+const request = require("supertest");
+const app = require("../server");
 
 
 describe('Test Functions', function () {
+
+
     test('responds to api/fuel/gethistory/:uid', () => {
-        const req = {param: {uid: 43}};
-        const res = { 
-            text: '', 
-            stat: '',
-            status: function(input) {
-                this.stat = input;
-                return {
-                    json: function(input) {
-                        this.text = input;
-                    }
-                }
-            },
-        }
 
-        fuelController.getHistory(req, res);
+        return request(app)
+            .get("/api/fuel/gethistory/34")
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+            })
 
-        console.log(res.text)
-
-        expect(res.stat).toBe(200)
     })
+
+
+    
 })

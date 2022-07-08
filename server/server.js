@@ -54,6 +54,5 @@ app.get("/*", (req, res) => {
     res.status(200).json("welcome")
 });
 
+module.exports = app;
 
-
-app.listen(5000);
