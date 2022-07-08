@@ -26,7 +26,6 @@ const getPrice = async (req, res, next) => {
     }
         
     
-    
 
     const state = req.body.state;
     const previousHistory = req.body.previousHistory;
