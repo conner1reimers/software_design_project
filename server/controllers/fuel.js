@@ -95,7 +95,7 @@ const submitQuote = async (req, res, next) => {
 
 
 const getHistory = async (req, res, next) => {
-    const uid = req.param.uid;
+    const uid = req.params.uid;
 
     const sqlStatement = {
         sql: "select * from FUEL_QUOTE where uid = ?",
@@ -115,7 +115,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -123,7 +123,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -131,7 +131,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Dog st. Houston, TX. 77379",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -139,7 +139,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "3234 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 3102,
             suggested: 1.675,
             total: 1688
@@ -147,7 +147,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 14102,
             suggested: 1.375,
             total: 11688
@@ -155,7 +155,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Dog st. Houston, TX. 77379",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -163,7 +163,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "3234 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 3102,
             suggested: 1.675,
             total: 1688
@@ -171,7 +171,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 14102,
             suggested: 1.375,
             total: 11688
@@ -179,7 +179,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Dog st. Houston, TX. 77379",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -187,7 +187,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Dog st. Houston, TX. 77379",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
@@ -195,7 +195,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "3234 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 3102,
             suggested: 1.675,
             total: 1688
@@ -203,7 +203,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Willow Tail st",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 14102,
             suggested: 1.375,
             total: 11688
@@ -211,7 +211,7 @@ const getHistory = async (req, res, next) => {
         {
             address: "5683 Dog st. Houston, TX. 77379",
             date: today.toDateString(),
-            username: uid,
+            uid: uid,
             gallonsRequested: 1002,
             suggested: 1.675,
             total: 1688
