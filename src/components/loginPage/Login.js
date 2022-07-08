@@ -29,6 +29,10 @@ const Login = () => {
             // VALID INPUTS
 
             let response;
+            state.setAppState({
+                userInfo: formState
+            });
+            state.setPageState("user");
 
             try {
 
@@ -41,16 +45,7 @@ const Login = () => {
                     }),  
                     {'Content-Type': 'application/json'}    // Content Type
                 );
-
-                if(response) {
-                    state.setAppState({
-                        userInfo: formState
-                    });
-                    state.setPageState("user");
-                } else {
-                    console.log("there was a problem")
-                }
-                
+                console.log(response);
 
             } catch (err) {
                 console.log(err)
