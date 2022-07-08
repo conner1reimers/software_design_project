@@ -30,12 +30,19 @@ describe('Test Functions', function () {
         return request(app)
             .get("/api/fuel/gethistory/34")
             .then(response => {
+                
                 expect(response.statusCode).toBe(200);
-                console.log(response.body);
 
                 expect(response.body).toEqual(
                     expect.arrayContaining([
-                        expect.objectContaining({uid: "34"})
+                        expect.objectContaining({
+                            uid: "34",
+                            address: expect.any(String),
+                            date: expect.any(String),
+                            gallonsRequested: expect.any(Number),
+                            suggested: expect.any(Number),
+                            total: expect.any(Number)
+                        })
                     ])
                 )
             })
