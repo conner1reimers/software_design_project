@@ -55,6 +55,20 @@ describe('Test Functions', function () {
 
     })
 
+
+    
+    test('responds to api/users/login', () => {
+       
+        return request(app)
+            .post("/api/users/login")
+            .expect("Content-Type", /json/)
+            .send({
+                username: "tmnguyen",   
+                password: "tmnguyen11"
+            }) 
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+
     test('responds to api/fuel/submitquote', () => {
 
         return request(app)
@@ -131,5 +145,36 @@ describe('Test Functions', function () {
 
 
 
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                    username: expect.any(String),
+                    password: expect.any(String)
+                })
+            )
+        })
+    })
+
+    test('responds to api/users/register', () => {
+       
+        return request(app)
+            .post("/api/users/register")
+            .expect("Content-Type", /json/)
+            .send({
+                username: "tmnguyen",   
+                password: "tmnguyen11",
+                password2: "tmnguyen11"
+            }) 
+            .then(response => {
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                    username: expect.any(String),
+                    password: expect.any(String),
+                    //password2: expect.any(String)
+                })
+            )
+        })
+    })
     
 })
