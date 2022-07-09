@@ -8,8 +8,6 @@ const Pricing  = require('../util/pricing.js');
 const getPrice = async (req, res, next) => {
     const errors = validationResult(req);
 
-    console.log(req.body)
-
     if(!errors.isEmpty()) {
         console.log(errors)
         if (errors.errors[0].param === 'previousHistory') {
@@ -83,8 +81,14 @@ const submitQuote = async (req, res, next) => {
         values: [address, date, username, gallonsRequested, suggested, total]
     }
     
-    let result = {...sqlStatement.values};
-    console.log(result)
+    let result = {
+        address: req.body.address,
+        date: req.body.date,
+        gallonsRequested: req.body.gallonsRequested,
+        suggested: req.body.suggested,
+        total: req.body.total,
+        username: req.body.username,
+    };
     // try {
     //     result = await mysql.query(sqlStatement);
     //     
@@ -111,6 +115,7 @@ const getHistory = async (req, res, next) => {
     // } catch(err) {console.log(err)}
 
     let today = new Date();
+
 
     //dummy data
     result = [
