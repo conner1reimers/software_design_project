@@ -55,6 +55,7 @@ describe('Test Functions', function () {
 
     })
 
+
     
     test('responds to api/users/login', () => {
        
@@ -67,6 +68,82 @@ describe('Test Functions', function () {
             }) 
             .then(response => {
                 expect(response.statusCode).toBe(200);
+
+    test('responds to api/fuel/submitquote', () => {
+
+        return request(app)
+        .post("/api/fuel/submitquote")
+        .expect("Content-Type", /json/)
+        .send({
+            address:'1234 Test Adress Lane',
+                username:'user12',
+                date:"2022-04-01",
+                gallonsRequested:10,
+                suggested:400,
+                total:500
+        }) 
+                
+            .then(response => {
+                
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body).toEqual(
+                   
+                    expect.objectContaining({
+                        /*address: expect.any(String),
+                        username: expect.any(String),
+                        date: expect.any(String),
+                        gallonsRequested: expect.any(Number),
+                        suggested: expect.any(Number),
+                        total: expect.any(Number)*/
+                        
+                        address: ('1234 Test Adress Lane'),
+                        username:('user12'),
+                        date: ("2022-04-01"),
+                        gallonsRequested:(10),
+                        suggested: (400),
+                        total: (500)
+                    })
+                    
+                )
+            })
+
+    })
+   
+    test('responds to api/users/User_profile/', () => {
+
+        return request(app)
+            .post("/api/users/User_profile/")
+            .expect("Content-Type", /json/)
+            .send({
+                name:'John Doe',
+                address1:'1111 street lane',
+                address2:'building 2',
+                city:"Houston-04-01",
+                state:"TX",
+                zip:98745
+        }) 
+            .then(response => {
+                
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body).toEqual(
+                    
+                        expect.objectContaining({
+                            name:'John Doe',
+                            address1:'1111 street lane',
+                            address2:'building 2',
+                            city:"Houston-04-01",
+                            state:"TX",
+                            zip:98745
+                        })
+                    
+                )
+            })
+
+    })
+
+
 
                 expect(response.body).toEqual(
                     expect.objectContaining({
