@@ -68,7 +68,15 @@ describe('Test Functions', function () {
             }) 
             .then(response => {
                 expect(response.statusCode).toBe(200);
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                    username: expect.any(String),
+                    password: expect.any(String),
 
+                })
+            )
+            })
+        })
     test('responds to api/fuel/submitquote', () => {
 
         return request(app)
@@ -145,14 +153,6 @@ describe('Test Functions', function () {
 
 
 
-                expect(response.body).toEqual(
-                    expect.objectContaining({
-                    username: expect.any(String),
-                    password: expect.any(String)
-                })
-            )
-        })
-    })
 
     test('responds to api/users/register', () => {
        
