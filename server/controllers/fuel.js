@@ -83,7 +83,8 @@ const submitQuote = async (req, res, next) => {
         values: [address, date, username, gallonsRequested, suggested, total]
     }
     
-    let result;
+    let result = {...sqlStatement.values};
+    console.log(result)
     // try {
     //     result = await mysql.query(sqlStatement);
     //     
@@ -91,7 +92,7 @@ const submitQuote = async (req, res, next) => {
 
 
 
-    res.status(200).json({...sqlStatement.values});
+    res.status(200).json(result);
 }
 
 
