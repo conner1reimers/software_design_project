@@ -17,20 +17,15 @@ const getPrice = async (req, res, next) => {
           const err = new HttpError('State given is not valid, must be 2 characters', 422)
           return next(err)
         }
-         
         else if (errors.errors[0].param === 'gallonsRequested') {
             const err = new HttpError('Requested gallons must be a number', 422)
             return next(err)
         }
     }
         
-    
-
     const state = req.body.state;
     const previousHistory = req.body.previousHistory;
     const gallonsRequested = req.body.gallonsRequested;
-
-
 
     const thePrice = new Pricing(state, previousHistory); 
     const [suggested, total] = thePrice.predictPrice(gallonsRequested);
@@ -76,10 +71,10 @@ const submitQuote = async (req, res, next) => {
 
 
 
-    const sqlStatement = {
-        sql: "insert into FUEL_QUOTE (address, date, uid, gallons, suggested, total) values (?, ?, ?, ?, ?, ?)",
-        values: [address, date, username, gallonsRequested, suggested, total]
-    }
+    // const sqlStatement = {
+    //     sql: "insert into FUEL_QUOTE (address, date, uid, gallons, suggested, total) values (?, ?, ?, ?, ?, ?)",
+    //     values: [address, date, username, gallonsRequested, suggested, total]
+    // }
     
     let result = {
         address: req.body.address,

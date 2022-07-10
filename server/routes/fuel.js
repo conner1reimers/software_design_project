@@ -17,7 +17,7 @@ router.post("/getprice",
 
 router.post("/submitquote",
     [
-        body("adderss").isLength({min: 5, max: 100}),
+        body("address").isLength({min: 5, max: 100}),
         body("username").isLength({min: 6, max: 12}),
         body("date").isDate(),
         body("gallonsRequested").isNumeric(),

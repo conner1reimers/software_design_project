@@ -1,4 +1,4 @@
-const mysql = require('../util/mysql.js');
+// const mysql = require('../util/mysql.js');
 const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator');
 

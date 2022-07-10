@@ -1,4 +1,4 @@
-const mysql = require('../util/mysql.js');
+// const mysql = require('../util/mysql.js');
 const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator')
 
@@ -22,14 +22,12 @@ const login = async (req, res, next) => {
 
     // FIND USERNAME + PASSWORD COMBO IN DATABASE
 
-    console.log(`USER: ${username}, PASS: ${password}`);
 
 
-
-    const sqlStatement = {
-      sql: "select * from USERS where username = ? and password = ?",
-      values: [username, password]
-    }
+    // const sqlStatement = {
+    //   sql: "select * from USERS where username = ? and password = ?",
+    //   values: [username, password]
+    // }
 
     // let userInfo;
     // let result;
@@ -44,20 +42,14 @@ const login = async (req, res, next) => {
 
 
 
-    let hasPreviousPurchase = false;
+    // let hasPreviousPurchase = false;
 
     // Check database for previous quote history
-    const sqlStatement2 = {
-      sql: "select * from FUEL_QUOTE where user_id = ?",
-      values: [username]
-    }
+    // const sqlStatement2 = {
+    //   sql: "select * from FUEL_QUOTE where user_id = ?",
+    //   values: [username]
+    // }
   
-    // try {
-    //     result = await mysql.query(sqlStatement2);
-    //     if(result.rows.length >= 1) {
-    //         hasPreviousPurchase = true;
-    //     }
-    // } catch(err) {console.log(err)}
 
     res.status(200).json({username, password});
 
@@ -87,20 +79,21 @@ const register = async (req, res, next) => {
 
 
   if (password !== password2) {
+    console.log(password2)
     const err = new HttpError('Passwords must match.', 422)
     return next(err)
   }
 
   // INSERT USER INTO DB
-  console.log(`USER: ${username}, PASS: ${password}`)
+  // console.log(`USER: ${username}, PASS: ${password}`)
 
-  const sqlStatement = {
-    sql: "insert into USERS (username, password) values (?, ?)",
-    values: [username, password]
-  }
+  // const sqlStatement = {
+  //   sql: "insert into USERS (username, password) values (?, ?)",
+  //   values: [username, password]
+  // }
   
-  let userInfo;
-  let result;
+  // let userInfo;
+  // let result;
   // try {
   //     result = await mysql.query(sqlStatement);
   //     
@@ -111,12 +104,6 @@ const register = async (req, res, next) => {
 
 }
 
-const user = async (req, res, next) => {
-
-  res.status(200).json("hey")
-}
-
 
 exports.register = register;
 exports.login = login;
-exports.user = user;
