@@ -20,7 +20,7 @@ export const useHttpClient = () => {
                 body,
                 headers,
                 signal: httpAbortController.signal,
-                credentials: 'same-origin'
+                credentials: 'include'
 
             }, );
             const responseData = await response.json();
