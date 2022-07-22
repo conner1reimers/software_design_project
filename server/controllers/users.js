@@ -108,28 +108,12 @@ const register = async (req, res, next) => {
   }
 
   // INSERT USER INTO DB
-<<<<<<< HEAD
-  // console.log(`USER: ${username}, PASS: ${password}`)
-
-  // const sqlStatement = {
-  //   sql: "insert into USERS (username, password) values (?, ?)",
-  //   values: [username, password]
-  // }
-  
-  // let userInfo;
-  // let result;
-  // try {
-  //     result = await mysql.query(sqlStatement);
-  //     
-  // } catch(err) {console.log(err)}
-=======
 
   const sqlStatement = {
     sql: "insert into TEST_USERS (username, password) values (?, ?)",
     values: [username, password]
   }
   
->>>>>>> conner_reimers
 
 
   const sessID = uuidv4();
