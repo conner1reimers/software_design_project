@@ -6,12 +6,8 @@ import {useHttpClient} from '../../util/hooks/http-hook';
 import { useGlobalMsg } from '../../util/hooks/useGlobalMsg';
 //import DatePicker from "react-datepicker";
 
-const FuelQuote = () => {
-  let state = useContext(appContext);
-  const {isLoading, sendRequest} = useHttpClient();
-  const setGlobalMsg = useGlobalMsg();
 
-  const [formState, inputHandler] = useForm({
+const initForm = {
     GallonsRequested: {
         value: 0,
         isValid: false
@@ -29,7 +25,15 @@ const FuelQuote = () => {
         value: '$0',
         isValid: false
     }
-  });
+};
+
+
+const FuelQuote = () => {
+  let state = useContext(appContext);
+  const {isLoading, sendRequest} = useHttpClient();
+  const setGlobalMsg = useGlobalMsg();
+
+  const [formState, inputHandler, resetForm] = useForm(initForm);
   
 
 
@@ -49,12 +53,13 @@ const FuelQuote = () => {
                     uid: state.appState.uid,
                     date: formState.deliveryDate.value,
                     gallonsRequested: formState.GallonsRequested.value,
-                    suggested: formState.suggested.value,
-                    total: formState.total.value
+                    suggested: parseFloat(formState.suggested.value.replace("$", "")),
+                    total: parseFloat(formState.total.value.replace("$", ""))
                 }),
                 {"Content-Type": "application/json"});
 
             setGlobalMsg(response.msg);
+            resetForm(initForm);
         } catch(err) {console.log(err)}
     }
             

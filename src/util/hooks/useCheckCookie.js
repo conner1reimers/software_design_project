@@ -24,7 +24,6 @@ export const useCheckCookie = (setAppState, setPageState) => {
                   ...prevState,
                   uid: response.uid,
                   hasPreviousPurchase: false,
-                  userInfo: null,
                   userInfoSet: false
               }});
             }

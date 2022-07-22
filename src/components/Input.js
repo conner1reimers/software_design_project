@@ -7,7 +7,7 @@ const Input = (props) => {
     {
       value: props.value || '',
       isValid: props.isValid || false,
-      showLabel: (props.value < 1 || props.sideLabel) ? true : false
+      showLabel: (!props.value || (props.value && props.value.length < 1) || props.sideLabel) ? true : false
     });
 
   

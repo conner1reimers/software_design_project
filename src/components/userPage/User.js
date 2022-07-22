@@ -11,25 +11,27 @@ const User = () => {
   const {isLoading, sendRequest} = useHttpClient();
   const setGlobalMsg = useGlobalMsg();
 
+  console.log(state.appState)
+
   const [formState, inputHandler] = useForm({
         name: {
             value: state.appState.userInfo.name,
             isValid: false
         },
         address1: {
-            value: state.appState.userInfo.address1.name,
+            value: state.appState.userInfo.address1,
             isValid: false
         },
         city: {
-            value: state.appState.userInfo.city.name,
+            value: state.appState.userInfo.city,
             isValid: false
         },
         state: {
-            value: state.appState.userInfo.state.name,
+            value: state.appState.userInfo.state,
             isValid: false
         },
         zip : {
-            value: state.appState.userInfo.zip.name,
+            value: state.appState.userInfo.zip,
             isValid: false
         },
   });
@@ -80,39 +82,24 @@ const User = () => {
 
     try {
 
-        if(!state.userInfoSet) {
-            response = await sendRequest(
-                "http://localhost:5000/api/users/User_profile", // URL
-                "POST",                                  // HTTP Request Type
-                JSON.stringify({           
-                    uid: state.appState.uid,               
-                    name: formState.name.value,
-                    address1: formState.address1.value,
-                    address2: formState.address2.value,
-                    city: formState.city.value,
-                    state: formState.state.value,
-                    zip: formState.zip.value
+        
+        response = await sendRequest(
+            "http://localhost:5000/api/users/User_profile", // URL
+            "POST",                                  // HTTP Request Type
+            JSON.stringify({           
+                uid: state.appState.uid,               
+                name: formState.name.value,
+                address1: formState.address1.value,
+                address2: formState.address2.value,
+                city: formState.city.value,
+                state: formState.state.value,
+                zip: formState.zip.value,
+                infoSet: state.appState.userInfoSet
     
-                }),  
-                {'Content-Type': 'application/json'}    // Content Type
-            );
-        } else {
-            response = await sendRequest(
-                "http://localhost:5000/api/users/User_profile", // URL
-                "POST",                                  // HTTP Request Type
-                JSON.stringify({           
-                    uid: state.appState.uid,               
-                    name: formState.name.value,
-                    address1: formState.address1.value,
-                    address2: formState.address2.value,
-                    city: formState.city.value,
-                    state: formState.state.value,
-                    zip: formState.zip.value
+            }),  
+            {'Content-Type': 'application/json'}    // Content Type
+        );
     
-                }),  
-                {'Content-Type': 'application/json'}    // Content Type
-            );
-        }
 
         
 

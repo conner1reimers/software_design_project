@@ -37,7 +37,7 @@ const login = async (req, res, next) => {
 
         // Now check database for previous quote history
         const sqlStatement2 = {
-          sql: "select * from FUEL_QUOTE where user_id = ?",
+          sql: "select * from FUEL_QUOTES where uid = ?",
           values: [uid]
         }
 
@@ -53,7 +53,7 @@ const login = async (req, res, next) => {
     }
   
 
-    res.status(200).json({username, password});
+    // res.status(200).json({username, password});
 
 }
 
@@ -87,7 +87,7 @@ const register = async (req, res, next) => {
 
 
   const sqlStatement = {
-    sql: "insert into TEST_USERS (username, password) values (?, ?)",
+    sql: "insert into USERS (username, password) values (?, ?)",
     values: [username, password]
   }
   
@@ -158,7 +158,7 @@ const checkCookie = async (req, res, next) => {
       uid = result[0].uid;
 
       const sqlStatement2 = {
-        sql: "select * from TEST_USER_INFO where uid = ?",
+        sql: "select * from client_info where uid = ?",
         values: [uid]
       }
 

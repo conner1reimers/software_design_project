@@ -1,4 +1,4 @@
-// const mysql = require('../util/mysql.js');
+const mysql = require('../util/mysql.js');
 const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator');
 
@@ -30,6 +30,7 @@ const user = async (req, res, next) => {
           }
 
     }
+
     const uid = req.body.uid;
     const name = req.body.name;
     const address1 = req.body.address1;
@@ -37,11 +38,20 @@ const user = async (req, res, next) => {
     const city = req.body.city;
     const state = req.body.state;
     const zip = req.body.zip;
+    const infoSet = req.body.infoSet;
     let result;
 
-    const sqlStatement = {
-      sql: "insert into TEST_USER_INFO (uid, name, address1, address2, city, state, zip) values (?, ?, ?, ?, ?, ?, ?)",
-      values: [uid, name, address1, address2, city, state, zip]
+    let sqlStatement;
+    if(!infoSet) {
+      sqlStatement = {
+        sql: "insert into client_info (uid, name, address1, address2, city, state, zip) values (?, ?, ?, ?, ?, ?, ?)",
+        values: [uid, name, address1, address2, city, state, zip]
+      }
+    } else {
+      sqlStatement = {
+        sql: "update client_info set name = ?, address1 = ?, address2 = ?, city = ?, state = ?, zip = ? where uid = ?",
+        values: [name, address1, address2, city, state, zip, uid]
+      }
     }
 
     try {

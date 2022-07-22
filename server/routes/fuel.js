@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fuelController = require("../controllers/fuel.js");
-const { check, body } = require("express-validator");
+const { body } = require("express-validator");
 
 
 router.get("/gethistory/:uid", fuelController.getHistory)
@@ -17,8 +17,8 @@ router.post("/getprice",
 
 router.post("/submitquote",
     [
-        body("address").isLength({min: 5, max: 100}),
-        body("username").isLength({min: 6, max: 12}),
+        body("address").isLength({min: 5, max: 200}),
+        body("uid").isNumeric(),
         body("date").isDate(),
         body("gallonsRequested").isNumeric(),
         body("suggested").isNumeric(),

@@ -36,12 +36,14 @@ const getPrice = async (req, res, next) => {
 const submitQuote = async (req, res, next) => {
     const errors = validationResult(req);
 
+    console.log(req.body)
+
     if(!errors.isEmpty()) {
         if (errors.errors[0].param === 'address') {
             const err = new HttpError('Client server error, make sure your profile is set up', 422)
             return next(err)
-          } else if (errors.errors[0].param === 'username') {
-            const err = new HttpError('Username given is not valid, must be 6-12 characters', 422)
+          } else if (errors.errors[0].param === 'uid') {
+            const err = new HttpError('UID Invalid. Server error', 422)
             return next(err)
           }
           else if (errors.errors[0].param === 'date') {
@@ -66,8 +68,8 @@ const submitQuote = async (req, res, next) => {
     const uid = req.body.uid;
     const date = req.body.date;
     const gallonsRequested = req.body.gallonsRequested;
-    const suggested = parseFloat(req.body.suggested.replace("$", ""));
-    const total = parseFloat(req.body.total.replace("$", ""));
+    const suggested = req.body.suggested
+    const total = req.body.total;
 
 
 
@@ -102,123 +104,13 @@ const getHistory = async (req, res, next) => {
     let result;
     try {
         result = await mysql.query(sqlStatement);
+        console.log(result)
         res.status(200).json(result);
         
     } catch(err) {
         console.log(err);
         return next(err);
     }
-
-    // let today = new Date();
-
-
-    // //dummy data
-    // result = [
-    //     {
-    //         address: "5683 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Dog st. Houston, TX. 77379",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "3234 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 3102,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 14102,
-    //         suggested: 1.375,
-    //         total: 11688
-    //     },
-    //     {
-    //         address: "5683 Dog st. Houston, TX. 77379",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "3234 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 3102,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 14102,
-    //         suggested: 1.375,
-    //         total: 11688
-    //     },
-    //     {
-    //         address: "5683 Dog st. Houston, TX. 77379",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Dog st. Houston, TX. 77379",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "3234 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 3102,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    //     {
-    //         address: "5683 Willow Tail st",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 14102,
-    //         suggested: 1.375,
-    //         total: 11688
-    //     },
-    //     {
-    //         address: "5683 Dog st. Houston, TX. 77379",
-    //         date: today.toDateString(),
-    //         uid: uid,
-    //         gallonsRequested: 1002,
-    //         suggested: 1.675,
-    //         total: 1688
-    //     },
-    // ];
 
 
 
