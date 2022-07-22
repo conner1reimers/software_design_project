@@ -20,7 +20,7 @@ router.post("/register",
         body("password2").isLength({min: 6, max: 12})
 
     ],
-    usersController.login);
+    usersController.register);
 
 
 
@@ -37,5 +37,6 @@ router.post("/User_profile",
     userProfileController.user);
 
 
+router.get("/checkcookie", usersController.checkCookie)
 
 module.exports = router;

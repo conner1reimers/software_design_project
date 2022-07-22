@@ -13,8 +13,11 @@ const FuelQuoteHistory = () => {
     const getQuoteHistory = async () => {
         let response;
         try {
-            response = await sendRequest(`http://localhost:5000/api/fuel/gethistory/${state.appState.userInfo.username.value}`);
-            if(response) setQuoteHistory(response);
+            response = await sendRequest(`http://localhost:5000/api/fuel/gethistory/${state.appState.uid}`);
+            if(response) {
+                console.log(response)
+                setQuoteHistory(response);
+            }
         } catch(err) {console.log(err);}
     }
 
@@ -52,19 +55,21 @@ const FuelQuoteHistory = () => {
                         </div>
 
                 {quoteHistory && quoteHistory.map((element, indx) => {
+                    let date = new Date(element.delivery_date);
+
                     return (
-                        <div className='quote-history-item'>
+                        <div key={element.id} className='quote-history-item'>
                             <div className='quote-history-item--number'>
                                 <p>{indx+1}</p>
                             </div>
                             <div className='quote-history-item--date'>
-                                <p>{element.date}</p>
+                                <p>{date.toDateString()}</p>
                             </div>
                             <div className='quote-history-item--address'>
-                                <p>{element.address}</p>
+                                <p>{element.delivery_address}</p>
                             </div>
                             <div className='quote-history-item--gallons'>
-                                <p>{element.gallonsRequested}</p>
+                                <p>{element.gallons}</p>
                             </div>
                             <div className='quote-history-item--price'>
                                 <p>{element.suggested}</p>

@@ -30,14 +30,33 @@ const user = async (req, res, next) => {
           }
 
     }
-
+    const uid = req.body.uid;
     const name = req.body.name;
     const address1 = req.body.address1;
     const address2 = req.body.address2;
     const city = req.body.city;
     const state = req.body.state;
     const zip = req.body.zip;
+    let result;
 
-    res.status(200).json({name, address1,address2,city,state,zip});
+    const sqlStatement = {
+      sql: "insert into TEST_USER_INFO (uid, name, address1, address2, city, state, zip) values (?, ?, ?, ?, ?, ?, ?)",
+      values: [uid, name, address1, address2, city, state, zip]
+    }
+
+    try {
+      result = await mysql.query(sqlStatement);
+      if(result.affectedRows === 1) {
+        res.status(200).json({msg: "successful user info insert"});
+      } else {
+        const err = new HttpError("DB ERROR", 422);
+        return next(err);
+      }
+      
+    } catch(err) {
+      console.log(err)
+      return next(err);
+    }
+
 }
 exports.user = user

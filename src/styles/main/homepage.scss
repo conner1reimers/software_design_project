@@ -28,16 +28,15 @@ a:hover, a:active { text-decoration: none; }
 
 .main-links {
     @include heightWidthSame(30%);
-    width: 140px;
+    width: 30vw;
     @include flexcenter;
     flex-direction: column;
-    align-items: flex-start;
     row-gap: 5px;    
     a {
         color: $text-primary;
         margin: 0;
         padding: 0;
-        height: 20px;
+        height: 30px;
         border-bottom: 1px solid white;
         transition: all .2s;
         cursor: pointer;

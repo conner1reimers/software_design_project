@@ -4,27 +4,52 @@ import User from './components/userPage/User';
 import FuelQuote from './components/FuelQuotePage/FuelQuote';
 import Login from './components/loginPage/Login';
 import FuelQuoteHistory from './components/fuelquoteHistoryPage/FuelQuoteHistory';
+import GlobalMsg from './components/GlobalMsg';
 import "./styles/base.scss";
+import { useHttpClient } from './util/hooks/http-hook';
+import { useCheckCookie } from './util/hooks/useCheckCookie';
 
+
+const initialAppState = {
+  uid: null,
+  userInfo: {
+    name: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip : "",
+  },
+  userInfoSet: false,
+  hasPreviousPurchase: false,
+  globalMsg: {
+    msg: "",
+    active: false,
+    type: ""
+  }
+}
 
 let appContext = createContext();
 
 
 function App() {
-  const [appState, setAppState] = useState();
+  const [appState, setAppState] = useState(initialAppState);
   const [pageState, setPageState] = useState("login");
-
-  useEffect(() => {
-    console.log(appState)
-  }, [appState])
+  const checkCookie = useCheckCookie(setAppState, setPageState);
   
+  useEffect(() => {
+    checkCookie();
+  }, [])
+
   return (
     <appContext.Provider value={{appState, setAppState, setPageState}}>
       <div className="App">
 
+        <GlobalMsg/>
+
         <div className='heading'>
-          {pageState === "home" && appState && appState.userInfo && appState.userInfo.name && (
-            <p className='label'>Welcome {appState.userInfo.name.value}</p>
+          {pageState === "home" && appState.userInfoSet && (
+            <p className='label'>Welcome {appState.userInfo.name}</p>
           )}
         </div>
 
@@ -34,7 +59,6 @@ function App() {
             <a onClick={() => setPageState("user")}>User Profile</a>
             <a onClick={() => setPageState("fuel_form")}>Fuel Quote Form</a>
             <a onClick={() => setPageState("fuel_history")}>Fuel Quote History</a>
-
           </div>
         )}
         

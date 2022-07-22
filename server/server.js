@@ -4,17 +4,19 @@ const path = require("path");
 const cors = require("cors");
 const usersRoutes = require("./routes/users");
 const fuelRoutes = require("./routes/fuel");
+const cookieParser = require('cookie-parser')
 
 
 const app = express().use(cors({ origin: true, credentials: true }));
 // app.use(express.static(path.join(__dirname)));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "build")));
 
 
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 	res.setHeader("Access-Control-Allow-Credentials", true);
 	res.setHeader(
 		"Access-Control-Allow-Headers",
