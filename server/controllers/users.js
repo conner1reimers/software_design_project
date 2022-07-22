@@ -1,4 +1,4 @@
-// const mysql = require('../util/mysql.js');
+const mysql = require('../util/mysql.js');
 const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator')
 const { v4: uuidv4 } = require('uuid');
@@ -20,23 +20,11 @@ const login = async (req, res, next) => {
 
     const username = req.body.username;
     const password = req.body.password;
-<<<<<<< HEAD
-
-    // FIND USERNAME + PASSWORD COMBO IN DATABASE
-
-
-
-    // const sqlStatement = {
-    //   sql: "select * from USERS where username = ? and password = ?",
-    //   values: [username, password]
-    // }
-=======
     
     const sqlStatement = {
       sql: "select * from USERS where username = ? and password = ?",
       values: [username, password]
     }
->>>>>>> conner_reimers
 
     let uid;
     let result;
@@ -55,15 +43,6 @@ const login = async (req, res, next) => {
 
         result = await mysql.query(sqlStatement2);
 
-<<<<<<< HEAD
-    // let hasPreviousPurchase = false;
-
-    // Check database for previous quote history
-    // const sqlStatement2 = {
-    //   sql: "select * from FUEL_QUOTE where user_id = ?",
-    //   values: [username]
-    // }
-=======
         if(result.length >= 1) hasPreviousPurchase = true;
         
         res.status(200).json({hasPreviousPurchase, uid});
@@ -72,7 +51,6 @@ const login = async (req, res, next) => {
       console.log(err);
       return next(err);
     }
->>>>>>> conner_reimers
   
 
     res.status(200).json({username, password});
@@ -107,7 +85,6 @@ const register = async (req, res, next) => {
     return next(err)
   }
 
-  // INSERT USER INTO DB
 
   const sqlStatement = {
     sql: "insert into TEST_USERS (username, password) values (?, ?)",
