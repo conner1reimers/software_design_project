@@ -5,7 +5,11 @@ $text-secondary: #cfcfd8;
 $border-primary: #52525e;
 $border-secondary: #3a3944;
 
-
+$shadow-new:
+  -3px -2.6px 7.8px -8.5px rgba(55, 176, 192, 0.29),
+  -3px 2px 0px -8.5px rgba(239, 246, 247, 0.157),
+  0px -1px 9px -8.5px rgba(239, 246, 247, 0.057),
+  3px 2.6px 10.8px -13px #08090ade, 4px 6.4px 9.8px -5px #0c0d0fa8;
 
 
 @mixin btnReset {
@@ -126,7 +130,11 @@ code {
 
   &--sidelabel {
     display: flex;
-    // position: absolute;
+    @include flexcenter();
+    div.form-element-label.form-element-label--side {
+      min-width: 200px;
+      font-size: 1rem;
+    }
   }
 
     input {
@@ -183,4 +191,62 @@ code {
 
 .form-row {
   width: 100%;
+}
+
+#global-msg-hook {
+  @include heightWidth100;
+  z-index: 99999;
+  position: relative;
+}
+
+.global-msg {
+  // background-color: ;
+  position: fixed;
+  top: 15vh;
+  right: 10vw;
+  border-radius: 0.3rem;
+  height: 5vh;
+  width: 7vw;
+  padding: 0.2rem 1.9rem;
+  @include flexcenter;
+
+  &--contain {
+    @include flexcenter;
+    position: absolute;
+    width: 100vw;
+
+    div {
+      @include flexcenter;
+      position: relative;
+      padding: 0.7rem 1.6rem;
+      border-radius: 0.4rem;
+      background-color: rgba(22, 24, 24, 0.733);
+
+      img {
+        @include heightWidthSame(1.3rem);
+        position: relative;
+        left: 0.7rem;
+        opacity: 0.9;
+        box-shadow: $shadow-new;
+        @media screen and (max-width: 1099px) {
+          @include heightWidthSame(2.5rem);
+        }
+      }
+
+      span {
+        font-size: 0.9rem;
+        font-family: $font-1;
+        font-weight: 500;
+        color: $text-primary;
+        @media screen and (max-width: 1099px) {
+          font-size: 2.2rem;
+          position: relative;
+          right: 0.5vw;
+        }
+      }
+    }
+
+
+  }
+
 }

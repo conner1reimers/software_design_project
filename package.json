@@ -13,12 +13,15 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
+    "framer-motion": "^6.5.1",
     "mysql": "^2.18.1",
     "node-sass": "^7.0.1",
+    "randomstring": "^1.2.2",
     "react": "^18.2.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -29,7 +32,10 @@
   },
   "jest": {
     "verbose": true,
-    "collectCoverage": true
+    "collectCoverage": true,
+    "setupFiles": [
+      "<rootDir>/server/jest/setEnvVars.js"
+    ]
   },
   "eslintConfig": {
     "extends": [

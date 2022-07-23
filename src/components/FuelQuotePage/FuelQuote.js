@@ -3,13 +3,11 @@ import Input from '../Input'
 import {useForm, Controller} from '../../util/hooks/useForm';
 import {appContext} from '../../App';
 import {useHttpClient} from '../../util/hooks/http-hook';
+import { useGlobalMsg } from '../../util/hooks/useGlobalMsg';
 //import DatePicker from "react-datepicker";
 
-const FuelQuote = () => {
-  let state = useContext(appContext);
-  const {isLoading, sendRequest} = useHttpClient();
 
-  const [formState, inputHandler] = useForm({
+const initForm = {
     GallonsRequested: {
         value: 0,
         isValid: false
@@ -27,7 +25,15 @@ const FuelQuote = () => {
         value: '$0',
         isValid: false
     }
-  });
+};
+
+
+const FuelQuote = () => {
+  let state = useContext(appContext);
+  const {isLoading, sendRequest} = useHttpClient();
+  const setGlobalMsg = useGlobalMsg();
+
+  const [formState, inputHandler, resetForm] = useForm(initForm);
   
 
 
@@ -39,40 +45,37 @@ const FuelQuote = () => {
         return;
     } else {
         let response;
-        let date = new Date();
-        date = date.toDateString();
-
-
         try {
             response = await sendRequest("http://localhost:5000/api/fuel/submitquote", 
                 "POST", 
                 JSON.stringify({
-                    address: state.appState.userInfo.address1.value,
-                    username: state.appState.userInfo.username.value,
+                    address: state.appState.userInfo.address1 + " " + state.appState.userInfo.address2,
+                    uid: state.appState.uid,
                     date: formState.deliveryDate.value,
                     gallonsRequested: formState.GallonsRequested.value,
-                    suggested: formState.suggested.value,
-                    total: formState.total.value
+                    suggested: parseFloat(formState.suggested.value.replace("$", "")),
+                    total: parseFloat(formState.total.value.replace("$", ""))
                 }),
                 {"Content-Type": "application/json"});
 
-            console.log(response)
+            setGlobalMsg(response.msg);
+            resetForm(initForm);
         } catch(err) {console.log(err)}
     }
             
   }
 
   const requestPrice = useCallback(async () => {
-    if(formState && formState.GallonsRequested && state && state.appState && state.appState.userInfo && state.appState.userInfo.state) {
+    if(formState && formState.GallonsRequested && state && state.appState.userInfoSet) {
         let response;
-        console.log('hi')
+        console.log(state.appState)
         try {
             response = await sendRequest(
                 "http://localhost:5000/api/fuel/getprice", 
                 "POST",
                 JSON.stringify({                         // Request Body
-                    state: state.appState.userInfo.state.value,
-                    previousHistory: false,
+                    state: state.appState.userInfo.state,
+                    previousHistory: state.appState.hasPreviousPurchase,
                     gallonsRequested: parseInt(formState.GallonsRequested.value)
                 }),  
                 {'Content-Type': 'application/json'} );
@@ -122,7 +125,7 @@ const FuelQuote = () => {
             {formState && state && state.appState && state.appState.userInfo && 
             <form onSubmit={submitForm}>
                 <Input inputHandler={inputHandler} value={formState.GallonsRequested.value.toString()} type="numeric" id="GallonsRequested" label="Gallons Requested" sideLabel/>
-                <Input inputHandler={inputHandler} type='text' label="Delivery Address" value={state.appState.userInfo.address1 ? state.appState.userInfo.address1.value : ""} readOnly sideLabel/>
+                <Input inputHandler={inputHandler} type='text' label="Delivery Address" value={state.appState.userInfo.address1 ? (state.appState.userInfo.address1 + " " + state.appState.userInfo.address2) : ""} readOnly sideLabel/>
                 <Input inputHandler={inputHandler} id="deliveryDate" date min="2017-04-01" label="Delivery Date" sideLabel/>
                 <Input inputHandler={inputHandler} value={formState.suggested ? formState.suggested.value : "$0"} id="suggested" label="Suggested Price" readOnly sideLabel/>
                 <Input inputHandler={inputHandler} value={formState.total ? formState.total.value : "$0"} id="total" label="Total Price" readOnly sideLabel/>
