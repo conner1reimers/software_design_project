@@ -3,6 +3,10 @@ const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator')
 const { v4: uuidv4 } = require('uuid');
 
+const bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(15);
+const hash;
+
 
 
 const login = async (req, res, next) => {
@@ -20,7 +24,9 @@ const login = async (req, res, next) => {
 
     const username = req.body.username;
     const password = req.body.password;
-    
+    //encrypt password for comparison
+    hash=bcrypt.hashSync(password,salt);
+    password=hash;
     const sqlStatement = {
       sql: "select * from USERS where username = ? and password = ?",
       values: [username, password]
@@ -85,7 +91,9 @@ const register = async (req, res, next) => {
     return next(err)
   }
 
-
+//password is inserted encrypt password here
+  hash=bcrypt.hashSync(password,salt);
+  password=hash;
   const sqlStatement = {
     sql: "insert into USERS (username, password) values (?, ?)",
     values: [username, password]
