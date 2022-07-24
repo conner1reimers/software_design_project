@@ -7,7 +7,7 @@ const Input = (props) => {
     {
       value: props.value || '',
       isValid: props.isValid || false,
-      showLabel: true
+      showLabel: (!props.value || (props.value && props.value.length < 1) || props.sideLabel) ? true : false
     });
 
   
@@ -28,7 +28,10 @@ const Input = (props) => {
 
   useEffect(() => {
     props.inputHandler(props.id, inputState.value, inputState.isValid);
+    console.log(inputState)
   }, [inputState.value, inputState.isValid]);
+
+
 
 
   return (

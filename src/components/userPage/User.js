@@ -1,33 +1,37 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Input from '../Input'
 import {useForm} from '../../util/hooks/useForm';
 import { appContext } from '../../App';
 import StateDropdown from './StateDropdown';
 import {useHttpClient} from '../../util/hooks/http-hook';
+import { useGlobalMsg } from '../../util/hooks/useGlobalMsg';
 
 const User = () => {
   const state = useContext(appContext);
   const {isLoading, sendRequest} = useHttpClient();
+  const setGlobalMsg = useGlobalMsg();
+
+  console.log(state.appState)
 
   const [formState, inputHandler] = useForm({
         name: {
-            value: "",
+            value: state.appState.userInfo.name,
             isValid: false
         },
         address1: {
-            value: "",
+            value: state.appState.userInfo.address1,
             isValid: false
         },
         city: {
-            value: "",
+            value: state.appState.userInfo.city,
             isValid: false
         },
         state: {
-            value: "",
+            value: state.appState.userInfo.state,
             isValid: false
         },
         zip : {
-            value: "",
+            value: state.appState.userInfo.zip,
             isValid: false
         },
   });
@@ -37,8 +41,6 @@ const User = () => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    console.log('aasldgihjasiol;')
-    
     if(formState.name.value === "" || formState.name.value.length > 50 || formState.name.value.length < 2)  {
         alert("Full name must be between 2 and 50 characters");
         return;
@@ -76,40 +78,50 @@ const User = () => {
         return;
     }
 
-    state.setAppState((prevState) => {
-        return {
-            ...prevState,
-            userInfo: {
-                ...prevState.userInfo,
-                ...formState
-            }
-        }
-    });
-    console.log(state.appState)
-
-    state.setPageState("fuel_form");
-
     let response;
 
     try {
-
+        console.log(state.appState)
+        
         response = await sendRequest(
             "http://localhost:5000/api/users/User_profile", // URL
             "POST",                                  // HTTP Request Type
-            JSON.stringify({                         // Request Body
+            JSON.stringify({           
+                uid: state.appState.uid,               
                 name: formState.name.value,
                 address1: formState.address1.value,
                 address2: formState.address2.value,
                 city: formState.city.value,
                 state: formState.state.value,
-                zip: formState.zip.value
-
+                zip: formState.zip.value,
+                infoSet: state.appState.userInfoSet
+    
             }),  
             {'Content-Type': 'application/json'}    // Content Type
         );
+    
+
         
 
-        if(response) console.log(response)
+        if(response.msg) {
+            setGlobalMsg(response.msg);
+            state.setAppState((prevState) => {
+                return {
+                    ...prevState,
+                    userInfo: {
+                        ...prevState.userInfo,
+                        name: formState.name.value,
+                        address1: formState.address1.value,
+                        address2: formState.address2.value,
+                        city: formState.city.value,
+                        state: formState.state.value,
+                        zip: formState.zip.value
+                    },
+                    userInfoSet: true
+                }
+            });
+            state.setPageState("fuel_form");
+        }
             
     } catch (err) {
         console.log(err)
@@ -117,24 +129,30 @@ const User = () => {
 
   }
 
+
+  useEffect(() => {
+    setGlobalMsg("You must enter information before you continue");
+  }, [])
+
+
   return (
     <div className='user-page'>
         <div className='form-contain'>
-            <div className='back-btn'>
+            {state.appState.userInfoSet && <div className='back-btn'>
                 <button className='btn' onClick={() => state.setPageState("home")}> back to home </button>
-            </div>
+            </div>}
 
             <div className='register-header'>
                 <p className='label'>Profile Management</p>
             </div>
 
             <form onSubmit={submitForm}>
-                <Input inputHandler={inputHandler} id="name" label="Full Name"/>
-                <Input inputHandler={inputHandler} id="address1" label="Address 1"/>
-                <Input inputHandler={inputHandler} id="address2" label="Address 2"/>
-                <Input inputHandler={inputHandler} id="city" label="City"/>
+                <Input inputHandler={inputHandler} id="name" label="Full Name" value={state.appState.userInfo.name}/>
+                <Input inputHandler={inputHandler} id="address1" label="Address 1" value={state.appState.userInfo.address1}/>
+                <Input inputHandler={inputHandler} id="address2" label="Address 2" value={state.appState.userInfo.address2}/>
+                <Input inputHandler={inputHandler} id="city" label="City" value={state.appState.userInfo.city}/>
                 <StateDropdown inputHandler={inputHandler}/>
-                <Input inputHandler={inputHandler} id="zip" label="Zipcode"/>
+                <Input inputHandler={inputHandler} id="zip" label="Zipcode" value={state.appState.userInfo.zip}/>
                 <button type="submit" className="btn">SUBMIT</button>
             </form>
 

@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/users.js");
 const userProfileController = require("../controllers/client_profile.js");
-const { check, body } = require("express-validator");
+const { body } = require("express-validator");
 
 
-// :username indicates in the URL we will specify that parameter
 router.post("/login",
     [
         body("username").isLength({min: 6, max: 12}),
@@ -20,7 +19,7 @@ router.post("/register",
         body("password2").isLength({min: 6, max: 12})
 
     ],
-    usersController.login);
+    usersController.register);
 
 
 
@@ -37,5 +36,7 @@ router.post("/User_profile",
     userProfileController.user);
 
 
+router.get("/checkcookie", usersController.checkCookie)
+router.get("/logout", usersController.logout)
 
 module.exports = router;

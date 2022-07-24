@@ -2,9 +2,12 @@ import React, {useContext, useEffect} from 'react'
 import Input from '../Input'
 import {useForm} from '../../util/hooks/useForm';
 import {appContext} from '../../App';
+import { useHttpClient } from '../../util/hooks/http-hook';
 
 const Registration = () => {
   let state = useContext(appContext);
+  const {isLoading, sendRequest} = useHttpClient();
+
 
   const [formState, inputHandler] = useForm({
     username: {
@@ -22,20 +25,39 @@ const Registration = () => {
   });
 
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-
+    let response;
     if(formState.username.value.length < 12 && formState.username.value.length >= 6 && 
         formState.password.value.length < 12 && formState.password.value.length >= 6) {
             if(formState.password.value !== formState.password2.value) {
                 alert("Try again, your passwords do not match");
                 return;
             } else {
-                state.setAppState({
-                    userInfo: formState
-                });
+                response = await sendRequest(
+                    "http://localhost:5000/api/users/register", // URL
+                    "POST",                                  // HTTP Request Type
+                    JSON.stringify({                         // Request Body
+                        username: formState.username.value,
+                        password: formState.password.value,
+                        password2: formState.password2.value
 
-                state.setPageState("user")
+                    }),  
+                    {'Content-Type': 'application/json'}    // Content Type
+                );
+                if(response.msg === "Successfully Created an Account") {
+                    state.setAppState((prevState) => {
+                        return {
+                            ...prevState,
+                            uid: response.id,
+                            userInfo: {
+                                username: formState.username.value
+                            }
+                        }
+                    });
+                    state.setPageState("user");
+                }
+                
             }
         } else {
             alert("Username and password must be between 6 and 12 characters");
