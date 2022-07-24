@@ -70,7 +70,6 @@ describe('Test Functions', function () {
                 expect(response.statusCode).toBe(200);
                 expect(response.body).toEqual(
                     expect.objectContaining({
-
                         hasPreviousPurchase: expect.any(Boolean),
                         uid: expect.any(Number),
                         userInfo: expect.any(Object)
@@ -80,13 +79,6 @@ describe('Test Functions', function () {
     })
 
 
-                  
-
-
-                })
-            )
-            })
-        })
     test('responds to api/fuel/submitquote', () => {
 
         return request(app)
