@@ -63,8 +63,8 @@ describe('Test Functions', function () {
             .post("/api/users/login")
             .expect("Content-Type", /json/)
             .send({
-                username: "asdfasdf",   
-                password: "asdfasdf"
+                username: "test123",   
+                password: "test123"
             }) 
             .then(response => {
                 expect(response.statusCode).toBe(200);
@@ -72,10 +72,13 @@ describe('Test Functions', function () {
                     expect.objectContaining({
                         hasPreviousPurchase: expect.any(Boolean),
                         uid: expect.any(Number),
+                        userInfo: expect.any(Object)
                     })
             )
             })
-        })
+    })
+
+
     test('responds to api/fuel/submitquote', () => {
 
         return request(app)
@@ -105,6 +108,45 @@ describe('Test Functions', function () {
             })
 
     })
+    
+    test('responds to api/user/checkcookie', () => {
+
+        return request(app)
+        .get("/api/users/checkcookie")
+        .set('Cookie', ['sid=282c3ac1-26c6-449b-bb26-e1b21fcdd229'])
+            .then(response => {
+                
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body).toEqual(
+                   
+                    expect.objectContaining({
+                        msg: expect.stringMatching("cookie found"),
+                        hasPreviousPurchase: expect.any(Boolean),
+                        uid: expect.any(Number),
+                        userInfo: expect.any(Object)
+                    })
+                    
+                )
+            })
+
+    })
+
+    test('responds to api/user/logout', () => {
+        return request(app)
+        .get("/api/users/logout")
+            .then(response => {
+                
+                expect(response.statusCode).toBe(200);
+
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                        msg: expect.stringMatching("no cookie")
+                    })
+                )
+            })
+    })
+    
    
     test('responds to api/users/User_profile/', () => {
 
@@ -186,6 +228,7 @@ describe('Fail Functions', function () {
             .post("/api/users/User_profile/")
             .expect("Content-Type", /json/)
             .send({
+                uid: 1,
                 name:'fredrick tempt',
                 address1:'48377 tss street',
                 address2:'building 2',
@@ -202,6 +245,7 @@ describe('Fail Functions', function () {
             .post("/api/users/User_profile/")
             .expect("Content-Type", /json/)
             .send({
+                uid: 3,
                 name:'fredrick tempt',
                 address1:'',
                 address2:'building 2',
@@ -218,6 +262,7 @@ describe('Fail Functions', function () {
             .post("/api/users/User_profile/")
             .expect("Content-Type", /json/)
             .send({
+                uid: 3,
                 name:'fredrick tempt',
                 address1:'13135 street',
                 address2:'building 2',
@@ -237,6 +282,26 @@ describe('Fail Functions', function () {
             .send({
                 username:'f',
                 password:'',
+            }) 
+            .then(response => {expect(response.statusCode).toBe(422);})
+    })
+    test('responds to fails 2 api/users/login', () => {
+        return request(app)
+            .post("/api/users/login")
+            .expect("Content-Type", /json/)
+            .send({
+                username:'ftest222',
+                password:'ftest222',
+            }) 
+            .then(response => {expect(response.statusCode).toBe(422);})
+    })
+    test('responds to fails 3 api/users/login', () => {
+        return request(app)
+            .post("/api/users/login")
+            .expect("Content-Type", /json/)
+            .send({
+                username:'ftest222',
+                password:'asd',
             }) 
             .then(response => {expect(response.statusCode).toBe(422);})
     })
@@ -291,7 +356,7 @@ describe('Fail Functions', function () {
         .expect("Content-Type", /json/)
         .send({
             address:'1234 Test Adress Lane',
-            username:'user12',
+            uid:3,
             date:"2022-04-01",
             gallonsRequested:431,
             suggested:555,
@@ -306,7 +371,7 @@ describe('Fail Functions', function () {
         .expect("Content-Type", /json/)
         .send({
             address:'1234 Test Adress Lane',
-            username:'user12',
+            uid:2,
             date:"2022-04-01",
             gallonsRequested:"not num",
             suggested:555,
@@ -321,7 +386,7 @@ describe('Fail Functions', function () {
         .expect("Content-Type", /json/)
         .send({
             address:'1234 Test Adress Lane',
-            username:'user12',
+            uid:2,
             date:"2022-04-01",
             gallonsRequested:241,
             suggested:"not num",
@@ -329,7 +394,36 @@ describe('Fail Functions', function () {
         })
         .then(response => {expect(response.statusCode).toBe(422); })
     })
+    test('4 responds to and fails api/fuel/submitquote', () => {
 
+        return request(app)
+        .post("/api/fuel/submitquote")
+        .expect("Content-Type", /json/)
+        .send({
+            address:'1234 Test Adress Lane',
+            uid:5,
+            date:"2022-04-01",
+            gallonsRequested:241,
+            suggested:413,
+            total:"not num"
+        })
+        .then(response => {expect(response.statusCode).toBe(422); })
+    })
+    test('5 responds to and fails api/fuel/submitquote', () => {
+
+        return request(app)
+        .post("/api/fuel/submitquote")
+        .expect("Content-Type", /json/)
+        .send({
+            address:'1234 Test Adress Lane',
+            uid:'user12',
+            date:1,
+            gallonsRequested:241,
+            suggested:413,
+            total:44
+        })
+        .then(response => {expect(response.statusCode).toBe(422); })
+    })
 
 
     

@@ -8,6 +8,7 @@ import GlobalMsg from './components/GlobalMsg';
 import "./styles/base.scss";
 import { useHttpClient } from './util/hooks/http-hook';
 import { useCheckCookie } from './util/hooks/useCheckCookie';
+import { useLogout } from './util/hooks/useLogout';
 
 
 const initialAppState = {
@@ -36,10 +37,12 @@ function App() {
   const [appState, setAppState] = useState(initialAppState);
   const [pageState, setPageState] = useState("login");
   const checkCookie = useCheckCookie(setAppState, setPageState);
-  
+  const logout = useLogout(setAppState, setPageState, initialAppState);
+
   useEffect(() => {
     checkCookie();
   }, [])
+
 
   return (
     <appContext.Provider value={{appState, setAppState, setPageState}}>
@@ -59,6 +62,7 @@ function App() {
             <a onClick={() => setPageState("user")}>User Profile</a>
             <a onClick={() => setPageState("fuel_form")}>Fuel Quote Form</a>
             <a onClick={() => setPageState("fuel_history")}>Fuel Quote History</a>
+            <a onClick={() => logout()}>Logout</a>
           </div>
         )}
         

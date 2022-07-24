@@ -2,10 +2,8 @@ const mysql = require('../util/mysql.js');
 const HttpError = require("../util/http-error");
 const {validationResult} = require('express-validator')
 const { v4: uuidv4 } = require('uuid');
-
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(15);
-const hash;
+
 
 
 
@@ -25,20 +23,36 @@ const login = async (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     //encrypt password for comparison
-    hash=bcrypt.hashSync(password,salt);
-    password=hash;
+    
+    
     const sqlStatement = {
-      sql: "select * from USERS where username = ? and password = ?",
-      values: [username, password]
+      sql: "select * from USERS where username = ?",
+      values: [username]
     }
 
     let uid;
     let result;
+    let clientProfileResult;
     let hasPreviousPurchase = false;
+    let userInfo;
     try {
         result = await mysql.query(sqlStatement);
 
-        if(result.length >= 1) uid = result[0].uid;
+
+        if(result.length >= 1) {
+          const match = await bcrypt.compare(password, result[0].password);
+
+          if(match) {
+            uid = result[0].uid;
+          } else {
+            const err = new HttpError('Invalid password', 422);
+            return next(err);
+          }
+          
+        } else {
+          const err = new HttpError('Invalid username/password', 422);
+          return next(err);
+        }
         
 
         // Now check database for previous quote history
@@ -49,17 +63,36 @@ const login = async (req, res, next) => {
 
         result = await mysql.query(sqlStatement2);
 
-        if(result.length >= 1) hasPreviousPurchase = true;
+        const sqlStatement3 = {
+          sql: "select * from CLIENT_INFO where uid = ?",
+          values: [uid]
+        }
+
+
+        clientProfileResult = await mysql.query(sqlStatement3);
+
+        if(clientProfileResult.length >= 1) userInfo = clientProfileResult[0];
+
+        const sessID = uuidv4();
+        const sqlStatement4 = {
+          sql: "insert into COOKIES (sid, uid) values (?, ?)",
+          values: [sessID, uid]
+        }
+        let cookieResult = await mysql.query(sqlStatement4);
+        if(cookieResult.affectedRows === 1) {
+          res.cookie('sid', sessID, {expires: new Date(Date.now() + 1296000000), httpOnly: false });
+          res.status(200).json({hasPreviousPurchase, uid, userInfo});
+        } else {
+          const err = new HttpError('server error', 422)
+          return next(err)
+        }
         
-        res.status(200).json({hasPreviousPurchase, uid});
 
     } catch(err) {
       console.log(err);
       return next(err);
     }
   
-
-    // res.status(200).json({username, password});
 
 }
 
@@ -79,9 +112,12 @@ const register = async (req, res, next) => {
         return next(err)
       }
   }
+  
+  const salt = bcrypt.genSaltSync(15);
+  let hash;
 
   const username = req.body.username;
-  const password = req.body.password;
+  let password = req.body.password;
   const password2 = req.body.password2;
 
 
@@ -91,12 +127,16 @@ const register = async (req, res, next) => {
     return next(err)
   }
 
-//password is inserted encrypt password here
-  hash=bcrypt.hashSync(password,salt);
-  password=hash;
+  //password is inserted encrypt password here
+  try {
+    hash = await bcrypt.hash(password,salt);
+  } catch(err) {
+    return next(err);
+  }
+  
   const sqlStatement = {
     sql: "insert into USERS (username, password) values (?, ?)",
-    values: [username, password]
+    values: [username, hash]
   }
   
 
@@ -130,20 +170,16 @@ const register = async (req, res, next) => {
             return next(err);
           }
         }
-
       } catch(err) {
         console.log(err)
         mysql.rollback();
         return next(err);
       }
-      
     })
   } catch(err) {
     console.log(err)
     return next(err);
   }
-  
-
 }
 
 
@@ -163,10 +199,11 @@ const checkCookie = async (req, res, next) => {
 
     try {
       result = await mysql.query(sqlStatement);
+      console.log(result)
       uid = result[0].uid;
 
       const sqlStatement2 = {
-        sql: "select * from client_info where uid = ?",
+        sql: "select * from CLIENT_INFO where uid = ?",
         values: [uid]
       }
 
@@ -203,7 +240,31 @@ const checkCookie = async (req, res, next) => {
   
 }
 
+const logout = async (req, res, next) => {
+  const cookies = req.cookies;
+
+  if(cookies.sid) {
+    const sqlStatement = {
+      sql: "delete from COOKIES where sid = ?",
+      values: [cookies.sid]
+    }
+
+    try {
+      await mysql.query(sqlStatement);
+      res.clearCookie("sid");
+      res.status(200).json({msg: "logged out"});
+    } catch(err) {
+      console.log(err)
+      return next(err);
+    }
+  } else {
+    res.status(200).json({msg: "no cookie"})
+  }
+  
+}
+
 
 exports.register = register;
 exports.login = login;
 exports.checkCookie = checkCookie;
+exports.logout = logout;

@@ -37,5 +37,6 @@ router.post("/User_profile",
 
 
 router.get("/checkcookie", usersController.checkCookie)
+router.get("/logout", usersController.logout)
 
 module.exports = router;

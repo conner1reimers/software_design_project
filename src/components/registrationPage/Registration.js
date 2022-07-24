@@ -46,10 +46,13 @@ const Registration = () => {
                     {'Content-Type': 'application/json'}    // Content Type
                 );
                 if(response.msg === "Successfully Created an Account") {
-                    state.setAppState({
-                        userInfo: {
-                            username: formState.username.value,
-                            uid: response.id
+                    state.setAppState((prevState) => {
+                        return {
+                            ...prevState,
+                            uid: response.id,
+                            userInfo: {
+                                username: formState.username.value
+                            }
                         }
                     });
                     state.setPageState("user");

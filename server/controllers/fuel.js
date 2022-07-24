@@ -36,8 +36,6 @@ const getPrice = async (req, res, next) => {
 const submitQuote = async (req, res, next) => {
     const errors = validationResult(req);
 
-    console.log(req.body)
-
     if(!errors.isEmpty()) {
         if (errors.errors[0].param === 'address') {
             const err = new HttpError('Client server error, make sure your profile is set up', 422)
@@ -95,7 +93,6 @@ const submitQuote = async (req, res, next) => {
 
 const getHistory = async (req, res, next) => {
     const uid = req.params.uid;
-
     const sqlStatement = {
         sql: "select * from FUEL_QUOTES where uid = ?",
         values: [uid]
@@ -104,16 +101,12 @@ const getHistory = async (req, res, next) => {
     let result;
     try {
         result = await mysql.query(sqlStatement);
-        console.log(result)
         res.status(200).json(result);
         
     } catch(err) {
         console.log(err);
         return next(err);
     }
-
-
-
 }
 
 

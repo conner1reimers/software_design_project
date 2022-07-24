@@ -81,7 +81,7 @@ const User = () => {
     let response;
 
     try {
-
+        console.log(state.appState)
         
         response = await sendRequest(
             "http://localhost:5000/api/users/User_profile", // URL

@@ -29,13 +29,9 @@ const Login = () => {
             // VALID INPUTS
 
             let response;
-            state.setAppState({
-                userInfo: formState
-            });
-            state.setPageState("user");
+            
 
             try {
-
                 response = await sendRequest(
                     "http://localhost:5000/api/users/login", // URL
                     "POST",                                  // HTTP Request Type
@@ -45,7 +41,26 @@ const Login = () => {
                     }),  
                     {'Content-Type': 'application/json'}    // Content Type
                 );
-                console.log(response);
+                if(response.userInfo) {
+                    state.setPageState("home");
+                    state.setAppState((prevState) => {
+                      return{
+                        ...prevState,
+                        uid: response.uid,
+                        hasPreviousPurchase: response.hasPreviousPurchase,
+                        userInfo: response.userInfo,
+                        userInfoSet: true
+                    }});
+                  } else {
+                    state.setPageState("user");
+                    state.setAppState((prevState) => {
+                      return {
+                        ...prevState,
+                        uid: response.uid,
+                        hasPreviousPurchase: false,
+                        userInfoSet: false
+                    }});
+                  }
 
             } catch (err) {
                 console.log(err)

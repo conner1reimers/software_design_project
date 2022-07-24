@@ -44,12 +44,12 @@ const user = async (req, res, next) => {
     let sqlStatement;
     if(!infoSet) {
       sqlStatement = {
-        sql: "insert into client_info (uid, name, address1, address2, city, state, zip) values (?, ?, ?, ?, ?, ?, ?)",
+        sql: "insert into CLIENT_INFO (uid, name, address1, address2, city, state, zip) values (?, ?, ?, ?, ?, ?, ?)",
         values: [uid, name, address1, address2, city, state, zip]
       }
     } else {
       sqlStatement = {
-        sql: "update client_info set name = ?, address1 = ?, address2 = ?, city = ?, state = ?, zip = ? where uid = ?",
+        sql: "update CLIENT_INFO set name = ?, address1 = ?, address2 = ?, city = ?, state = ?, zip = ? where uid = ?",
         values: [name, address1, address2, city, state, zip, uid]
       }
     }
