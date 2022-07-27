@@ -8,12 +8,31 @@
 .form-contain {
     @include flexcenter;
     flex-direction: column;
-
+    max-width: 500px;
+    min-width: 300px;
+    max-height: 500px;
+    width: 30%;
+    height: 60%;
+    margin: 100px auto;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    
     form {
         @include heightWidth100;
         @include flexcenter;
+        justify-content: flex-start;
+        align-items: flex-start;
         flex-direction: column;
         row-gap: 10px;
+        padding-left: 2rem;
+        margin-top: 30px;
+        input {
+            width: 90%;
+        }
+        p.link {
+            color: rgba(7, 8, 8, 0.683);
+
+        }
     }
 }
 
@@ -23,6 +42,7 @@
     @include flexcenter;
     justify-content: flex-end;
     height: 100px;
+    margin-right: 2rem;
 
     button {
         background-color: black;
@@ -52,12 +72,63 @@
 
 .register-header {
     width: 100%;
+    height: 100px;
     @include flexcenter;
-    justify-content: flex-start;    
-    // padding-left: 1rem;
+    margin-top: 50px;
+    p{
+        color: black;
+        font-size: 2rem;
+    }
 }
 
 
+.user-page {
+    width: 50%;
+    height: 100vh;
+    @include flexcenter;
+}
+
+div.form-contain.user-form-contain {
+    width: 50%;
+    max-width: 700px;
+    height: 100%;
+    max-height: 800px;
+
+    div.form-row.dropdown {
+        width: 90%;
+    }
+}
+
+
+
 .Fuel_Quote {
-    min-width: 30vw;
+    width: 60%;
+    height: 100%;
+    @include flexcenter;
+
+    div.form-contain {
+        max-width: 800px;
+        max-height: 900px;
+        width: 80%;
+        min-height: 700px;
+        form {
+            div.form-row {
+                width: 90%;
+                div.form-element-label.form-element-label--side {
+                    p {
+                        color: black;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+    }
+
+    div.Fuel_Quote-header {
+        p {
+            color: black;
+            font-size: 2rem;
+        }
+    }
 }

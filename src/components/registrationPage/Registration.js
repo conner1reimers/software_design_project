@@ -69,10 +69,6 @@ const Registration = () => {
   return (
     <div className='registration'>
         <div className='form-contain'>
-{/*             
-            <div className='back-btn'>
-                <button className='btn' onClick={() => state.setPageState("home")}> back to home </button>
-            </div> */}
 
             <div className='register-header'>
                 <p className='label'>Sign-Up!</p>
@@ -84,7 +80,7 @@ const Registration = () => {
                 <Input inputHandler={inputHandler} id="password2" label="Verify Password"/>
                 <div className='login-bottom'>
                     <button type="submit" className="btn">SUBMIT</button>
-                    <p onClick={() => state.setPageState('login')} className='link'>Already have an account? <span> Login </span></p>
+                    <p onClick={() => state.setPageState('login')} className='link register-acct-link'>Already have an account? <span> Login </span></p>
                 </div>
                 
             </form>

@@ -50,9 +50,10 @@ a:hover, a:active { text-decoration: none; }
 
 .login-bottom {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     grid-gap: 1rem;
-    // padding-left: .5rem;
+    margin-top: 15px;
 
 }
 

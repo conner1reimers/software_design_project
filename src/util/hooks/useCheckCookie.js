@@ -6,7 +6,6 @@ export const useCheckCookie = (setAppState, setPageState) => {
         let response;
         try {
           response = await sendRequest("http://localhost:5000/api/users/checkcookie");
-          console.log(response)
           if(response.msg === "cookie found") {
             if(response.userInfo) {
               setPageState("home");

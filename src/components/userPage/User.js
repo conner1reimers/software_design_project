@@ -137,7 +137,7 @@ const User = () => {
 
   return (
     <div className='user-page'>
-        <div className='form-contain'>
+        <div className='form-contain user-form-contain'>
             {state.appState.userInfoSet && <div className='back-btn'>
                 <button className='btn' onClick={() => state.setPageState("home")}> back to home </button>
             </div>}
